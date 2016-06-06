@@ -29,6 +29,15 @@ public abstract class DotRender implements RenderStrategy{
 	
 	public abstract Color dotColor(double t);
 	
+	@Override
+	public int width() {
+		return width;
+	}
+
+	@Override
+	public int height() {
+		return height;
+	}
 	
 
 }

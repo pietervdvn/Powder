@@ -11,9 +11,9 @@ public enum Elements {
 
 	VAPORIZER(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0,
 			null, -1.0, 0, 0),
-			
-			CONDENSOR(Color.gray.darker(), NINF, 0, NINF, 0,
-			null, INF, 0, INF, 0, null, -1.0, 0, 0),
+
+	CONDENSOR(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0,
+			null, -1.0, 0, 0),
 
 	AIR(new Color(0, 0, 0, 0), 0, 0.0006, NINF, 0, null, 10000, 0.0012, INF, 0,
 			null, 1.0, 0.2, 0.1),
@@ -30,6 +30,13 @@ public enum Elements {
 	SAND(Color.YELLOW.darker(), 275, 2.0, NINF, 0, null, 10000, 1.5, INF, 0,
 			null, 0.001, 0.3, 0.2),
 
+	// TODO fix constants
+	MAGMA(Color.RED.darker(), 275, 2.0, NINF, 0, null, 10000, 1.5, INF, 0,
+			null, 0.8, 0.8, 0.7),
+
+	MAGMA_0(Color.ORANGE.darker(), 275, 2.0, NINF, 0, null, 10000, 1.51, INF, 0,
+			null, 0.8, 0.8, 0.8),
+
 	WET_SAND(Color.YELLOW.darker().darker(), 275, 2., 275, 0, null, 10000, 1.5,
 			350, 0.0000001, null, 0.2, 0.5, 0.4),
 
@@ -44,7 +51,6 @@ public enum Elements {
 			false),
 
 	;
-	// , MAGMA;
 
 	static {
 		// postfixes for "cannot reference field before initialization"...

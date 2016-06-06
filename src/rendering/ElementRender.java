@@ -13,6 +13,7 @@ public class ElementRender implements Render {
 		this.eg = eg;
 		this.pixelsX = pixelsX;
 		this.pixelsY = pixelsY;
+		
 	}
 
 	@Override
@@ -23,6 +24,16 @@ public class ElementRender implements Render {
 				g.fillRect(x*pixelsX, y*pixelsY, pixelsX, pixelsY);
 			}
 		}
+	}
+
+	@Override
+	public int getWidth() {
+		return pixelsX*eg.width();
+	}
+
+	@Override
+	public int getHeight() {
+		return pixelsY*eg.height();
 	}
 
 }

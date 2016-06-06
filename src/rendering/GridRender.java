@@ -23,4 +23,13 @@ public class GridRender implements Render{
 		}
 	}
 
+	@Override
+	public int getWidth() {
+		return grid.dotsX*render.width();
+	}
+
+	@Override
+	public int getHeight() {
+		return grid.dotsY*render.height();
+	}
 }

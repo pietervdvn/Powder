@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
+import reactivity.valueWrappers.IntegerValue;
 import elements.Element;
 import elements.Elements;
 import elements.Reactions;
@@ -18,7 +19,10 @@ public class ElementGrid {
 	private Element[][] grid;
 
 	private final double gravity = -9.81;
-
+	
+	public final IntegerValue ticks = new IntegerValue(0, "Passed ticks");
+	public final IntegerValue time	= new IntegerValue(0, "Needed time (ms)");
+	
 	public ElementGrid(int dotsX, int dotsY) {
 		this.temperature = new DubbleGrid(dotsX, dotsY);
 		weights = new double[dotsX][dotsY];
@@ -38,10 +42,14 @@ public class ElementGrid {
 	// private Element[][] target;
 
 	public void evolve() {
+		long start = System.currentTimeMillis();
 		exchangeHeat();
 		calcWeightsAndChangeState();
 		moveAround();
 		interact();
+		long stop = System.currentTimeMillis();
+		this.time.set((int) (stop - start));
+		this.ticks.set(1+ticks.get());
 	}
 
 	public void interact() {
@@ -94,8 +102,8 @@ public class ElementGrid {
 		for (int x = xStart; x >= 0 && x < grid.length; x += xInc) {
 			for (int y = yStart; y >= 0 && y < grid[0].length; y += yInc) {
 
-				int yi = lr();
-				int xi = lr();
+				int yi = p(0.5) ? 0 : lr();
+				int xi = p(0.5) ? 0 : lr();
 
 				if (!temperature.inBounds(x + xi, y + yi)) {
 					continue;
