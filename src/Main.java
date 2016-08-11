@@ -1,15 +1,19 @@
-import grid.ElementGrid;
-import grid.ElementGridSeed;
+import grid.FullGrid;
 import gui.PowderWindow;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import levels.Level;
+import levels.Levels;
 import reactivity.resources.guiColorModel.GUIColorModel;
 
 public class Main {
 
-	public static void seedR(ElementGrid elements, int w, int h) {
+	public static void seedR(FullGrid elements, int w, int h) {
 
 	}
 
@@ -17,7 +21,6 @@ public class Main {
 		try {
 			main0(args);
 		} catch (Exception e) {
-			System.err.println(e);
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -28,30 +31,33 @@ public class Main {
 		int dotsX = 400;
 		int dotsY = 100;
 
-		int pixelsTargetX = 1600;
+		int pixelsTargetX = 1200;
 		int pixelsDot = pixelsTargetX / dotsX;
 
-		ElementGrid elements = new ElementGrid(dotsX, dotsY);
+		FullGrid elements = new FullGrid(dotsX, dotsY);
 
 		GUIColorModel cm = new GUIColorModel();
 
-		List<ElementGridSeed> seeds = new ArrayList<>();
+		List<Level> seeds = new ArrayList<>();
 		seeds.add(Levels.beach);
 		seeds.add(Levels.heatExchanger);
 		seeds.add(Levels.magma);
-		seeds.add(Levels.randomness);
-		
-		Levels.magma.seed(elements);
+		seeds.add(Levels.vapor);
+		seeds.add(Levels.halfHeatExchanger);
+		seeds.add(Levels.vine);
 
-		new PowderWindow(cm, elements, seeds, pixelsDot);
+		elements.init(Levels.vine);
 
-		Thread.sleep(1000);
-
-		while(true){
-			elements.evolve();
-			Thread.sleep(10);
-			elements.getTemperature().setValue(dotsX/2, dotsY-1, 10000);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
 		}
+		PowderWindow w = new PowderWindow(cm, elements, seeds, pixelsDot);
+		w.temperatureToggle.set(false);
+		w.pressureToggle.set(false);
+	
 
 	}
 }

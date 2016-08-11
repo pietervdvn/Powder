@@ -15,14 +15,16 @@ public class Element {
 	protected final double densityAtLowest;
 	protected final double condensPoint;
 	protected final double pCondens;
+	protected final double pressureCold;
 	protected final double enthalpyCold;
 	protected Element cooledState;
 
 	protected double highestTemp;
 	protected final double densityAtHighest;
 	protected final double vaporPoint;
-	protected final double enthalpyHot;
 	protected final double pVapor;
+	protected final double pressureHot;
+	protected final double enthalpyHot;
 	protected Element heatedState;
 
 	protected final double movabiltiy;
@@ -67,9 +69,9 @@ public class Element {
 	 */
 
 	public Element(Elements representation, Color color, double lowestTemp,
-			double densityAtLowest, double condensPoint, double enthalpyCold,
+			double densityAtLowest, double condensPoint, double enthalpyCold,double pressureCold,
 			double pCondens, Element cooledState, double highestTemp,
-			double densityAtHighest, double vaporPoint, double enthalpyHot,
+			double densityAtHighest, double vaporPoint, double enthalpyHot, double pressureHot,
 			double pVapor, Element heatedState, double movabiltiy,
 			double heatExchangeSame, double heatInertia, boolean dynamic) {
 		this.representation = representation;
@@ -80,6 +82,7 @@ public class Element {
 		this.densityAtLowest = densityAtLowest;
 		this.condensPoint = condensPoint;
 		this.enthalpyCold = enthalpyCold;
+		this.pressureCold = pressureCold;
 		this.pCondens = pCondens;
 		this.cooledState = cooledState;
 
@@ -87,6 +90,7 @@ public class Element {
 		this.densityAtHighest = densityAtHighest;
 		this.vaporPoint = vaporPoint;
 		this.enthalpyHot = enthalpyHot;
+		this.pressureHot = pressureHot;
 		this.pVapor = pVapor;
 		this.heatedState = heatedState;
 		this.movabiltiy = movabiltiy;
@@ -95,7 +99,7 @@ public class Element {
 		this.heatExchangeSame = heatExchangeSame;
 		this.heatInertia = heatInertia;
 
-		weightDiff = 1 / densityAtHighest - 1 / densityAtLowest;
+		weightDiff = densityAtHighest - densityAtLowest;
 		tempRange = highestTemp - lowestTemp;
 
 		if ((lowestTemp > condensPoint && condensPoint != NINF)
@@ -132,7 +136,7 @@ public class Element {
 	}
 
 	public double weight(double temperature) {
-		return 1 / densityAtLowest + weightDiff * (temperature - lowestTemp)
+		return densityAtLowest + weightDiff * (temperature - lowestTemp)
 				/ tempRange;
 	}
 	
@@ -205,6 +209,14 @@ public class Element {
 
 	public double getHeatExchangeSame() {
 		return heatExchangeSame;
+	}
+	
+	public double getPressureCold() {
+		return pressureCold;
+	}
+	
+	public double getPressureHot() {
+		return pressureHot;
 	}
 
 }

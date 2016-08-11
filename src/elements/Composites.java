@@ -38,10 +38,6 @@ public class Composites {
 			fix.fix();
 		}
 		fixers = null;
-		for (int i = 0; i < composites.length; i++) {
-			System.out.println("Composite["+i+"] "+composites[i]);
-		}
-		
 	}
 
 	public Element getComposite(Element carrier, Element original) {

@@ -18,9 +18,9 @@ public class Composite extends Element {
 	private Composite(Composites fixers, Element carrier, Elements carried) {
 		super(carrier.representation, carrier.color, carrier.lowestTemp,
 				carrier.densityAtLowest, carrier.condensPoint,
-				carrier.enthalpyCold, carrier.pCondens, null,
+				carrier.enthalpyCold, carrier.pressureCold, carrier.pCondens, null,
 				carrier.highestTemp, carrier.densityAtHighest,
-				carrier.vaporPoint, carrier.enthalpyHot, carrier.pVapor, null,
+				carrier.vaporPoint, carrier.enthalpyHot, carrier.pressureHot, carrier.pVapor, null,
 				carrier.movabiltiy, carrier.heatExchangeSame,
 				carrier.heatInertia, carrier.dynamic);
 		if(carried == null){
@@ -55,7 +55,7 @@ public class Composite extends Element {
 			extra = " (freezes to " + shortString(cooledState) + "; heats to "
 					+ shortString(heatedState) + ")";
 		}
-		return "Composite: " + name() + " carrying " + original.name() + extra;
+		return name() + " carrying " + original.name() + extra;
 	}
 
 	private String shortString(Element e) {

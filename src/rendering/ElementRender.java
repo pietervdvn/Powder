@@ -1,15 +1,15 @@
 package rendering;
 
-import grid.ElementGrid;
+import grid.FullGrid;
 
 import java.awt.Graphics;
 
 public class ElementRender implements Render {
 	
-	private final ElementGrid eg;
+	private final FullGrid eg;
 	private final int pixelsX, pixelsY;
 	
-	public ElementRender(ElementGrid eg, int pixelsX, int pixelsY) {
+	public ElementRender(FullGrid eg, int pixelsX, int pixelsY) {
 		this.eg = eg;
 		this.pixelsX = pixelsX;
 		this.pixelsY = pixelsY;

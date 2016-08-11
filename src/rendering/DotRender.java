@@ -21,10 +21,10 @@ public abstract class DotRender implements RenderStrategy{
 	}
 
 	@Override
-	public void render(Graphics g, int x, int y, int dotW, int dotH, double t) {
+	public void render(Graphics g, int x, int y, double t) {
 		// dotW = one 'superDot' of size W
 		g.setColor(dotColor(t));
-		g.fillRect(x*width, y*width, width*dotW, height*dotH);
+		g.fillRect(x*width, y*width, width, height);
 	}
 	
 	public abstract Color dotColor(double t);

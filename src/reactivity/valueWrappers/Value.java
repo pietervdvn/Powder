@@ -65,7 +65,7 @@ public class Value<T> extends EventSource<ValueListener<T>> {
 		return true;
 	}
 	
-	private void throwEvent(){
+	public void throwEvent(){
 		SafeList<ValueListener<T>> l = getListeners();
 		synchronized (l) {
 			l.resetCounter();

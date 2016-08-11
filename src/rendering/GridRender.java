@@ -16,9 +16,9 @@ public class GridRender implements Render{
 	
 	public void render(Graphics g){
 		
-		for (int x = 0; x < grid.dotsX; x+=grid.resolutionX) {
-			for (int y = 0; y < grid.dotsY; y+=grid.resolutionY) {
-				render.render(g, x, y, grid.resolutionX , grid.resolutionY, grid.getValue(x, y));
+		for (int x = 0; x < grid.dotsX; x++) {
+			for (int y = 0; y < grid.dotsY; y++) {
+				render.render(g, x, y, grid.getValue(x, y));
 			}
 		}
 	}

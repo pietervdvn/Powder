@@ -1,5 +1,7 @@
 package rendering;
 
+import static utils.Utils.interpolate;
+
 import java.awt.Color;
 
 public class TemperatureRender extends DotRender {
@@ -7,7 +9,7 @@ public class TemperatureRender extends DotRender {
 	// in °C
 	private static int[] temperatures = { -275, -10, 0, 10, 25, 50, 75, 100, 1500, 5000 };
 	private static Color[] colors = { new Color(201, 0, 237), new Color(50, 0, 75), 
-		Color.BLUE,Color.RED,Color.CYAN, Color.GREEN,
+		Color.BLUE,Color.BLACK,Color.CYAN, Color.GREEN,
 			Color.YELLOW.darker(), Color.ORANGE, Color.RED, Color.WHITE };
 	private static int last = temperatures.length - 1;
 
@@ -57,22 +59,6 @@ public class TemperatureRender extends DotRender {
 
 	}
 
-	public static Color interpolate(Color one, Color two, double distL, double distR) {
-		int oneR = one.getRed();
-		int oneG = one.getGreen();
-		int oneB = one.getBlue();
-		
-		int twoR = two.getRed();
-		int twoG = two.getGreen();
-		int twoB = two.getBlue();
-		
-		double percentage = 1.0 - distL/(distL + distR);
-		
-		int r =  (int) (oneR * percentage + twoR * (1.0 - percentage));
-		int g =(int) (oneG * percentage + twoG * (1.0 - percentage));
-		int b = (int) (oneB * percentage + twoB * (1.0 - percentage));
-		return new Color(r,g,b);
-		
-	}
+
 
 }

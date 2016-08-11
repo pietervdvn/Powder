@@ -46,8 +46,6 @@ public class RenderingJPanel extends JPanel{
 		BooleanValue rt = new BooleanValue(true, name);
 		renderToggles.add(rt);
 		rt.addListener(repainter);
-		System.out.println("WIDTH: "+r.getWidth());// TODO sysout
-		System.out.println("HEIGHT: "+r.getHeight());// TODO sysout
 		setSize(Math.max(getWidth(), r.getWidth()), 
 				Math.max(getHeight(), r.getHeight()));
 		setPreferredSize(getSize());
@@ -73,5 +71,5 @@ public class RenderingJPanel extends JPanel{
 		renderers.remove(i);
 		renderToggles.remove(i);
 	}
-
+	
 }
