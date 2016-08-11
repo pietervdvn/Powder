@@ -38,7 +38,6 @@ public class FullGrid extends AbstractGrid<Element> {
 	}
 
 	public void init(Level l) {
-		ticks.set(0);
 		reset(Elements.AIR.behaviour);
 		getTemperature().reset(275);
 		l.seed(elements, temperature);
@@ -48,6 +47,7 @@ public class FullGrid extends AbstractGrid<Element> {
 		for (int i = 0; i < taintedColumns.length; i++) {
 			taintedColumns[i] = 0.0;
 		}
+		ticks.set(0);
 	}
 
 	public void evolve() {

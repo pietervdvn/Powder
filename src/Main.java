@@ -55,9 +55,6 @@ public class Main {
 			e.printStackTrace();
 		}
 		PowderWindow w = new PowderWindow(cm, elements, seeds, pixelsDot);
-		w.temperatureToggle.set(false);
-		w.pressureToggle.set(false);
-	
 
 	}
 }

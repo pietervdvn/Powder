@@ -1,17 +1,13 @@
 package levels;
 
-import static elements.Elements.BLOCK;
-import static elements.Elements.CONDENSOR;
-import static elements.Elements.SALT;
-import static elements.Elements.SAND;
-import static elements.Elements.VAPOR;
-import static elements.Elements.VAPORIZER;
-import static elements.Elements.VINE;
-import static elements.Elements.WATER;
-import static utils.Utils.p;
-import elements.Elements;
+import java.util.Arrays;
+import java.util.List;
+
+import static elements.Elements.*;
 import grid.ElementsGrid;
 import grid.Temperature;
+
+import static utils.Utils.*;
 
 public class Levels {
 
@@ -23,7 +19,7 @@ public class Levels {
 			int h = g.height();
 			for (int x = 0; x < w; x++) {
 				for (int y = h / 2; y < h; y++) {
-					g.put(x, y, p(0.5) ? Elements.MAGMA : Elements.MAGMA_0);
+					g.put(x, y, p(0.5) ? MAGMA : MAGMA_0);
 				}
 			}
 			temperature.reset(400);
@@ -41,7 +37,7 @@ public class Levels {
 		public void seed(ElementsGrid g, Temperature temperature) {
 			for (int x = 0; x < g.width(); x++) {
 				for (int y = 0; y < g.height(); y++) {
-					g.put(x, y, p(0.5) ? Elements.VAPOR : Elements.AIR);
+					g.put(x, y, p(0.5) ? VAPOR : AIR);
 				}
 			}
 			temperature.reset(475);
@@ -58,9 +54,9 @@ public class Levels {
 		@Override
 		public void seed(ElementsGrid g, Temperature temperature) {
 			g.fillStretch(0, 1, g.width(), 10, WATER);
-			g.fillStretch(0, 0, g.width(), 1, Elements.RAIN_MAKER);
-			g.fillStretch(0, g.height()/2, g.width()/3, 1, Elements.BLOCK);
-			
+			g.fillStretch(0, 0, g.width(), 1, RAIN_MAKER);
+			g.fillStretch(0, g.height() / 2, g.width() / 3, 1, BLOCK);
+
 			g.fillStretch(0, g.height() - 1, g.width(), 1, VINE);
 			temperature.reset(300);
 		}
@@ -146,5 +142,8 @@ public class Levels {
 			return "Beach";
 		}
 	};
+
+	public final static List<Level> presets = Arrays.asList(magma, vapor, vine, heatExchanger, halfHeatExchanger,
+			beach);
 
 }

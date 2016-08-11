@@ -1,5 +1,7 @@
 package reactivity.valueWrappers;
 
+import reactivity.ValueListener;
+
 /**
   * Bozels
   * 
@@ -19,5 +21,20 @@ public class BooleanValue extends PrimitiveValue<Boolean> {
 	public Boolean parse(String text) {
 		return Boolean.parseBoolean(text);
 	}
+	
+	public static class Not extends BooleanValue implements ValueListener<Boolean> {
 
+		public Not(BooleanValue src) {
+			super(!src.get(), src.getName());
+			src.addListener(this);
+		}
+
+		@Override
+		public void onValueChanged(Value<Boolean> source, Boolean newValue) {
+			set(!newValue);
+		}
+
+		
+	}
+	
 }

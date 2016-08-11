@@ -14,8 +14,11 @@ import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.StringValue;
 import reactivity.valueWrappers.Value;
 
-public class Toggle extends JPanel{
+public class Toggle extends JPanel implements ValueListener<Boolean>{
 	private static final long serialVersionUID = -3883165167106884378L;
+	
+	private BooleanValue enabled;
+	
 	public Toggle(BooleanValue bv) {
 		this(bv, new StringValue(bv.getName(), ""));
 	}
@@ -66,6 +69,19 @@ public class Toggle extends JPanel{
 		
 		this.add(box);
 		this.add(txt);
+	}
+	
+	public void setEnabled(BooleanValue enabled) {
+		if(this.enabled != null){
+			this.enabled.removeListener(this);
+		}
+		enabled.addListener(this);
+		onValueChanged(enabled, enabled.get());
+		this.enabled = enabled;
+	}
+	@Override
+	public void onValueChanged(Value<Boolean> source, Boolean newValue) {
+		setEnabled(newValue);
 	}
 
 }
