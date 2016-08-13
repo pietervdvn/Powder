@@ -23,6 +23,9 @@ public abstract class AbstractGrid<T> {
 	public abstract T getValue(int x, int y);
 
 	public void put(int x, int y, T t) {
+		if(x <0 || y < 0 || x >= dotsX || y >= dotsY){
+			return;
+		}
 		setValue(x, y, t);
 	}
 

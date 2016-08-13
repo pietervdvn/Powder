@@ -1,8 +1,9 @@
 package elements;
 
-import java.awt.Color;
+import static utils.Utils.INF;
+import static utils.Utils.NINF;
 
-import static utils.Utils.*;
+import java.awt.Color;
 
 public enum Elements {
 
@@ -14,9 +15,10 @@ public enum Elements {
 
 	CONDENSOR(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0,
 			null, -1.0, 0, 0),
+	
+	HEATER(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0, null, -1.0, 0 ,0 ),
+	COOLER(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0, null, -1.0, 0 ,0 ),
 
-	RAIN_MAKER(Color.gray.darker(), NINF, 0, NINF, 0, null, INF, 0, INF, 0, null,
-			-1.0, 0, 0),
 
 	AIR(new Color(0, 0, 0, 0), 0, 0.0006, NINF, 0, null, 475, 0.0005, INF, 0,
 			null, 1.0, 0.2, 0.1),
@@ -37,9 +39,6 @@ public enum Elements {
 	MAGMA(Color.RED.darker(), 275, 2.0000001, NINF, 0, null, 10000, 1.5, INF,
 			0, null, 0.8, 0.8, 0.1),
 
-	MAGMA_0(Color.ORANGE.darker(), 275, 2.0, NINF, 0, null, 10000, 1.50000001,
-			INF, 0, null, 0.8, 0.8, 0.1),
-
 	WET_SAND(Color.YELLOW.darker().darker(), 275, 2., 275, 0, null, 375, 1.5,
 			350, 0.0000001, null, 0.2, 0.5, 0.4),
 
@@ -52,7 +51,7 @@ public enum Elements {
 	SALT_WATER(new Color(20, 225, 252), 254.0, 1.02, 256, .3557, 0.0, 0.0001,
 			SALT_ICE, 375.0, 1.03, 340, 2.257, 1700, 0.001, null, 0.9, 0.8,
 			0.6, false),
-
+	
 	VINE(Color.GREEN, 275, 1.0, 277, 0.355, 0.0, 0.0, ICE, 375, 0.918, 370,
 			2.257, 1700, 0.00001, VAPOR, -1.0, 0.5, 0.5, false),
 			

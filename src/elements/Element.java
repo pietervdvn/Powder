@@ -109,6 +109,10 @@ public class Element {
 		}
 
 	}
+	
+	public void dynamicBehaviour(){
+		
+	}
 
 	public String name() {
 		return representation.name().substring(0, 1)

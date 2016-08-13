@@ -114,12 +114,15 @@ public class RenderingJPanel extends JPanel implements MouseListener, MouseMotio
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {}
+	public void mouseDragged(MouseEvent e) {
+		mouseX.set(e.getX() / pixelsPerDot);
+		mouseY.set(e.getY() / pixelsPerDot);
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		mouseX.set(e.getX() / pixelsPerDot);
-		mouseY.set(e.getY() % pixelsPerDot);
+		mouseY.set(e.getY() / pixelsPerDot);
 	}
 
 }

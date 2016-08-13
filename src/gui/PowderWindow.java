@@ -13,7 +13,6 @@ import levels.Level;
 import levels.Levels;
 import reactivity.ValueListener;
 import reactivity.resources.guiColorModel.GUIColorModel;
-import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.Value;
 import rendering.ElementRender;
 import rendering.GridRender;
@@ -24,6 +23,8 @@ import rendering.TemperatureRender;
 public class PowderWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
+	private final Pencil p;
+	
 	private final ValueListener<Integer> repainter = new ValueListener<Integer>() {
 
 		@Override
@@ -32,23 +33,9 @@ public class PowderWindow extends JFrame {
 		}
 	};
 
-	public PowderWindow(GUIColorModel cm, FullGrid elements, List<Level> seeds, int pixelsPerDot) {
+	public PowderWindow(GUIColorModel cm, FullGrid elements, int pixelsPerDot) {
 
 		RenderingJPanel renderP = new RenderingJPanel(pixelsPerDot);
-
-		renderP.mouseX.addHardListener(new ValueListener<Integer>() {
-			@Override
-			public void onValueChanged(Value<Integer> source, Integer newValue) {
-				System.out.println("X: " + newValue);
-			}
-		});
-		
-		renderP.mouseY.addHardListener(new ValueListener<Integer>() {
-			@Override
-			public void onValueChanged(Value<Integer> source, Integer newValue) {
-				System.out.println("Y: " + newValue);
-			}
-		});		
 
 		DubbleGrid temperature = elements.getTemperature();
 		Render renderTemp = new GridRender(temperature, new TemperatureRender(pixelsPerDot, pixelsPerDot));
@@ -68,7 +55,11 @@ public class PowderWindow extends JFrame {
 		JPanel extras = new JPanel();
 		extras.setLayout(new BoxLayout(extras, BoxLayout.Y_AXIS));
 
-		extras.add(new ControlsPanel(elements, ticker, renderP.getRenderToggles()));
+		ControlsPanel cp = new ControlsPanel(cm, elements, ticker, renderP.getRenderToggles());
+
+		p = new Pencil(elements, renderP.mousePressed, renderP.mouseX, renderP.mouseY, cp.selection, elements.ticks, cp.pencilSize);
+
+		extras.add(cp);
 
 		extras.add(new StatsPanel(cm, elements));
 

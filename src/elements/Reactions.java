@@ -1,6 +1,16 @@
 package elements;
 
-import static elements.Elements.*;
+import static elements.Elements.AIR;
+import static elements.Elements.CONDENSOR;
+import static elements.Elements.ICE;
+import static elements.Elements.SALT;
+import static elements.Elements.SALT_WATER;
+import static elements.Elements.SAND;
+import static elements.Elements.VAPOR;
+import static elements.Elements.VAPORIZER;
+import static elements.Elements.VINE;
+import static elements.Elements.WATER;
+import static elements.Elements.WET_SAND;
 
 public class Reactions {
 
@@ -41,9 +51,6 @@ public class Reactions {
 		
 		addReaction(VAPOR, VINE, 1.0, WATER, VINE, 0, 0, 0, 0);
 		
-		addReaction(RAIN_MAKER, AIR, 0.1, RAIN_MAKER, WATER, 0, 0,0,0);
-		addReaction(RAIN_MAKER, VAPOR, 1.0, RAIN_MAKER, WATER, 0, 0,0,0);
-
 
 	}
 

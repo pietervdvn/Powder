@@ -10,26 +10,22 @@ import grid.Temperature;
 import static utils.Utils.*;
 
 public class Levels {
-
-	public final static Level magma = new Level() {
+	
+	public final static Level clear = new Level(){
 
 		@Override
-		public void seed(ElementsGrid g, Temperature temperature) {
-			int w = g.width();
-			int h = g.height();
-			for (int x = 0; x < w; x++) {
-				for (int y = h / 2; y < h; y++) {
-					g.put(x, y, p(0.5) ? MAGMA : MAGMA_0);
-				}
-			}
-			temperature.reset(400);
+		public void seed(ElementsGrid elGrid, Temperature temperature) {
+			elGrid.reset(AIR.behaviour);
+			temperature.reset(300);
 		}
 
 		@Override
 		public String name() {
-			return "Magma";
+			return "Clear";
 		}
+		
 	};
+	
 
 	public final static Level vapor = new Level() {
 
@@ -54,7 +50,6 @@ public class Levels {
 		@Override
 		public void seed(ElementsGrid g, Temperature temperature) {
 			g.fillStretch(0, 1, g.width(), 10, WATER);
-			g.fillStretch(0, 0, g.width(), 1, RAIN_MAKER);
 			g.fillStretch(0, g.height() / 2, g.width() / 3, 1, BLOCK);
 
 			g.fillStretch(0, g.height() - 1, g.width(), 1, VINE);
@@ -143,7 +138,7 @@ public class Levels {
 		}
 	};
 
-	public final static List<Level> presets = Arrays.asList(magma, vapor, vine, heatExchanger, halfHeatExchanger,
+	public final static List<Level> presets = Arrays.asList(clear, vapor, vine, heatExchanger, halfHeatExchanger,
 			beach);
 
 }

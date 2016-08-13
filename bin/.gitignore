@@ -1,7 +1,4 @@
-/elements/
 /grid/
-/gui/
+/elements/
 /levels/
-/reactivity/
-/rendering/
-/utils/
+/gui/

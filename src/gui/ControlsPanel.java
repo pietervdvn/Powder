@@ -9,29 +9,34 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import elements.Element;
 import grid.FullGrid;
 import reactivity.ValueListener;
 import reactivity.gui.ProgressMeter;
 import reactivity.gui.Toggle;
+import reactivity.gui.coloringTextField.IntegerValueTextField;
+import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.valueWrappers.BooleanValue;
+import reactivity.valueWrappers.BooleanValue.Not;
 import reactivity.valueWrappers.IntegerValue;
 import reactivity.valueWrappers.Value;
-import reactivity.valueWrappers.BooleanValue.Not;
 
 public class ControlsPanel extends JPanel {
 	private static final long serialVersionUID = 5508832599308671632L;
 
-	public ControlsPanel(FullGrid elements, TickThread ticker, List<BooleanValue> toggles) {
-		
-		
+	public final Value<Element> selection;
+	public final Value<Integer> pencilSize = new IntegerValue(3, "Pencil size");
+	
+	public ControlsPanel(GUIColorModel cm, FullGrid elements, TickThread ticker, List<BooleanValue> toggles) {
+
 		setBorder(new TitledBorder("Controls"));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		Toggle playPause = new Toggle(ticker.control);
 		playPause.setEnabled(new Not(ticker.controlLocked));
-		
+
 		add(playPause);
 		add(new ToggleOptions(toggles, true));
-	
+
 		JButton tickOnce = new JButton(new AbstractAction("Tick Once") {
 			private static final long serialVersionUID = 1L;
 
@@ -41,10 +46,9 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 		add(tickOnce);
-		
-		
+
 		add(new ThousandTickerPanel(elements, ticker));
-		
+
 		ticker.control.addHardListener(new ValueListener<Boolean>() {
 			@Override
 			public void onValueChanged(Value<Boolean> source, Boolean newValue) {
@@ -52,11 +56,13 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 		ticker.control.throwEvent();
-		
-		
-		
-		add(new ElementSelector());
 
+		ElementSelector es = new ElementSelector();
+		selection = es.selection;
+		add(es);
+
+		add(new IntegerValueTextField(cm, pencilSize, 1, 50));
+		
 	}
 
 	public static class ThousandTickerPanel extends JPanel {
@@ -87,7 +93,7 @@ public class ControlsPanel extends JPanel {
 
 			add(tickThousand);
 			add(new ProgressMeter(progresMeas, 0, 1000));
-			
+
 		}
 
 	}

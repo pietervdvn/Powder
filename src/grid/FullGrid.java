@@ -2,10 +2,10 @@ package grid;
 
 import java.awt.Color;
 
-import levels.Level;
-import reactivity.valueWrappers.IntegerValue;
 import elements.Element;
 import elements.Elements;
+import levels.Level;
+import reactivity.valueWrappers.IntegerValue;
 
 public class FullGrid extends AbstractGrid<Element> {
 
@@ -17,6 +17,8 @@ public class FullGrid extends AbstractGrid<Element> {
 	private final Pressure basePressure;
 	// keeps track of what basepressure columns should be recalculated
 	private final double[] taintedColumns;
+	// keeps track of what elements don't move - and thus don't contribute to structural pressure
+	private final int[][] moveable;
 
 	// pressure caused by explosions, vaporization, ...
 	private final Pressure incidentalPressure;
@@ -34,16 +36,26 @@ public class FullGrid extends AbstractGrid<Element> {
 		this.basePressure = new Pressure(dotsX, dotsY);
 		this.incidentalPressure = new Pressure(dotsX, dotsY);
 		this.taintedColumns = new double[dotsX];
-
+		this.moveable = new int[dotsX][dotsY];
+		for (int x = 0; x < dotsX; x++) {
+			for (int y = 0; y < dotsY; y++) {
+				moveable[x][y] = 1;
+			}
+		}
 	}
 
 	public void init(Level l) {
 		reset(Elements.AIR.behaviour);
 		getTemperature().reset(275);
+		for (int x = 0; x < dotsX; x++) {
+			for (int y = 0; y < dotsY; y++) {
+				moveable[x][y] = 1;
+			}
+		}
 		l.seed(elements, temperature);
 
 		weights.calcWeights(temperature.getRaw(), elements.getRaw());
-		basePressure.calculateStructuralPressure(weights.getRaw());
+		basePressure.calculateStructuralPressure(moveable, weights.getRaw());
 		for (int i = 0; i < taintedColumns.length; i++) {
 			taintedColumns[i] = 0.0;
 		}
@@ -79,7 +91,7 @@ public class FullGrid extends AbstractGrid<Element> {
 		elements.changeState(temperature.getRaw(), basePressure.getRaw());
 		elements.moveAround(this, weights.getRaw());
 
-		int fixedCols = basePressure.calculateStructuralPressure(
+		int fixedCols = basePressure.calculateStructuralPressure(moveable, 
 				weights.getRaw(), 10.0, taintedColumns);
 		this.fixedColumns.set(fixedCols);
 
@@ -106,6 +118,7 @@ public class FullGrid extends AbstractGrid<Element> {
 	@Override
 	public void setValue(int x, int y, Element t) {
 		elements.setValue(x, y, t);
+		moveable[x][y] = t.canBeMoved() ? 1 : 0;
 	}
 
 	@Override
