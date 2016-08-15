@@ -54,7 +54,7 @@ public enum Elements {
 	
 	VINE(Color.GREEN, 275, 1.0, 277, 0.355, 0.0, 0.0, ICE, 375, 0.918, 370,
 			2.257, 1700, 0.00001, VAPOR, -1.0, 0.5, 0.5, false),
-			
+	
 	;
 
 	static {
@@ -63,8 +63,6 @@ public enum Elements {
 		ICE.behaviour.heatedState = WATER.behaviour;
 		VAPOR.behaviour.cooledState = WATER.behaviour;
 		SALT_ICE.behaviour.heatedState = SALT_WATER.behaviour;
-
-		Composites.all.fix();
 
 	}
 	public final Element behaviour;

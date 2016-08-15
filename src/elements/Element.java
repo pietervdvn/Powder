@@ -6,10 +6,11 @@ import static utils.Utils.NINF;
 import java.awt.Color;
 
 public class Element {
-	
-	public final int i;
 
 	protected final Elements representation;
+	public final int integerRepresentation;
+
+	protected final String name;
 	protected final Color color;
 	protected final double lowestTemp;
 	protected final double densityAtLowest;
@@ -28,14 +29,13 @@ public class Element {
 	protected Element heatedState;
 
 	protected final double movabiltiy;
-	protected final boolean dynamic;
 
 	protected final double weightDiff;
 	protected final double tempRange;
-	
+
 	protected final double heatExchangeSame;
 	protected final double heatInertia;
-	
+
 	/**
 	 * 
 	 * @param representation
@@ -47,7 +47,8 @@ public class Element {
 	 *            : weight at this temperature. Scales lineary
 	 * @param condensPoint
 	 *            : point at which it might start condensing
-	 * @param pCondens: chance it will change to cooledState randomly
+	 * @param pCondens:
+	 *            chance it will change to cooledState randomly
 	 * @param enthalpyCold
 	 *            : how much heat it gives the environment when condensing
 	 * @param cooledState
@@ -56,7 +57,8 @@ public class Element {
 	 * @param densityAtHighest
 	 * @param vaporPoint
 	 * @param enthalpyHot
-	 * @param pVapor: chance it will change to vapor randomly
+	 * @param pVapor:
+	 *            chance it will change to vapor randomly
 	 * @param heatedState
 	 * @param movabiltiy
 	 *            : how 'liquid' it is. (0.0 -> 1.0). Use -1.0 if it is stuck
@@ -68,15 +70,14 @@ public class Element {
 	 *            : shows special behaviour
 	 */
 
-	public Element(Elements representation, Color color, double lowestTemp,
-			double densityAtLowest, double condensPoint, double enthalpyCold,double pressureCold,
-			double pCondens, Element cooledState, double highestTemp,
-			double densityAtHighest, double vaporPoint, double enthalpyHot, double pressureHot,
-			double pVapor, Element heatedState, double movabiltiy,
-			double heatExchangeSame, double heatInertia, boolean dynamic) {
+	public Element(Elements representation, Color color, double lowestTemp, double densityAtLowest, double condensPoint,
+			double enthalpyCold, double pressureCold, double pCondens, Element cooledState, double highestTemp,
+			double densityAtHighest, double vaporPoint, double enthalpyHot, double pressureHot, double pVapor,
+			Element heatedState, double movabiltiy, double heatExchangeSame, double heatInertia, boolean dynamic) {
 		this.representation = representation;
+		this.name = representation.name().substring(0, 1) + representation.name().substring(1).toLowerCase();
 		this.color = color;
-		this.i = representation.ordinal();
+		this.integerRepresentation = representation.ordinal();
 
 		this.lowestTemp = lowestTemp;
 		this.densityAtLowest = densityAtLowest;
@@ -94,29 +95,32 @@ public class Element {
 		this.pVapor = pVapor;
 		this.heatedState = heatedState;
 		this.movabiltiy = movabiltiy;
-		this.dynamic = dynamic;
-		
+
 		this.heatExchangeSame = heatExchangeSame;
 		this.heatInertia = heatInertia;
 
 		weightDiff = densityAtHighest - densityAtLowest;
 		tempRange = highestTemp - lowestTemp;
 
-		if ((lowestTemp > condensPoint && condensPoint != NINF)
-				|| (highestTemp < vaporPoint && vaporPoint != INF)) {
-			throw new IllegalArgumentException(
-					"Lowest and condens OR highest and vapor don't match!");
+		if ((lowestTemp > condensPoint && condensPoint != NINF) || (highestTemp < vaporPoint && vaporPoint != INF)) {
+			throw new IllegalArgumentException("Lowest and condens OR highest and vapor don't match!");
 		}
 
 	}
-	
-	public void dynamicBehaviour(){
-		
+
+	public String toCSV() {
+		String val = name + ", " + color.getRed() + ", " + color.getGreen() + ", " + color.getBlue() + ", " + lowestTemp
+				+ ", " + densityAtLowest + ", " + condensPoint + ", " + pCondens + ", " + pressureCold + ", "
+				+ enthalpyCold;
+		val += ", " + (cooledState == null ? "" : cooledState.name) + ", " + highestTemp + ", " + densityAtHighest;
+		val += ", " + vaporPoint + ", " + pVapor + ", " + pressureHot + ", " + enthalpyHot + ", ";
+		val += (heatedState == null ? "" : heatedState.name) + ", " + movabiltiy + ", " + weightDiff;
+		val += ", " + tempRange + ", " + heatExchangeSame + ", " + heatInertia;
+		return val;
 	}
 
 	public String name() {
-		return representation.name().substring(0, 1)
-				+ representation.name().substring(1).toLowerCase();
+		return representation.name().substring(0, 1) + representation.name().substring(1).toLowerCase();
 	}
 
 	public Color color() {
@@ -140,15 +144,13 @@ public class Element {
 	}
 
 	public double weight(double temperature) {
-		return densityAtLowest + weightDiff * (temperature - lowestTemp)
-				/ tempRange;
+		return densityAtLowest + weightDiff * (temperature - lowestTemp) / tempRange;
 	}
-	
 
 	@Override
 	public String toString() {
-		return name()+ (heatedState == null ?"": ": heats to "+heatedState.name())
-				+(cooledState == null?"":"; cools to "+cooledState.name());
+		return name() + (heatedState == null ? "" : ": heats to " + heatedState.name())
+				+ (cooledState == null ? "" : "; cools to " + cooledState.name());
 	}
 
 	public Elements getRepresentation() {
@@ -199,10 +201,6 @@ public class Element {
 		return movabiltiy;
 	}
 
-	public boolean isDynamic() {
-		return dynamic;
-	}
-
 	public boolean canBeMoved() {
 		return movabiltiy >= 0;
 	}
@@ -214,11 +212,7 @@ public class Element {
 	public double getHeatExchangeSame() {
 		return heatExchangeSame;
 	}
-	
-	public double getPressureCold() {
-		return pressureCold;
-	}
-	
+
 	public double getPressureHot() {
 		return pressureHot;
 	}

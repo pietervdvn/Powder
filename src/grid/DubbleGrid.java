@@ -9,6 +9,11 @@ public class DubbleGrid extends Grid{
 		this.workingGrid = new double[grid.length][grid[0].length];
 	}
 	
+	public DubbleGrid(double[][] grid0, double[][] grid1) {
+		super(grid0);
+		this.workingGrid = grid1;
+	}
+	
 	public void swap(){
 		double[][] helper = grid;
 		grid = workingGrid;
@@ -46,10 +51,6 @@ public class DubbleGrid extends Grid{
 		} else {
 			return 0;
 		}
-	}
-
-	public int surface() {
-		return dotsX*dotsY;
 	}
 
 }

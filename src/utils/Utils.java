@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import elements.Element;
+import elements.Elements;
 
 public class Utils {
 
@@ -12,6 +13,10 @@ public class Utils {
 	public final static double INF = Double.POSITIVE_INFINITY;
 
 	private final static Random r = new Random();
+	
+	public static Elements[] knownElements(){
+		return Elements.values();
+	}
 
 	public static boolean p(double d) {
 		return r.nextDouble() < d;

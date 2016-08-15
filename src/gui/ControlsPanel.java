@@ -9,8 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import elements.Element;
-import grid.FullGrid;
+import grid2.Element;
+import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.gui.ProgressMeter;
 import reactivity.gui.Toggle;
@@ -27,7 +27,7 @@ public class ControlsPanel extends JPanel {
 	public final Value<Element> selection;
 	public final Value<Integer> pencilSize = new IntegerValue(3, "Pencil size");
 	
-	public ControlsPanel(GUIColorModel cm, FullGrid elements, TickThread ticker, List<BooleanValue> toggles) {
+	public ControlsPanel(GUIColorModel cm, UsefullFullGrid elements, TickThread ticker, List<BooleanValue> toggles, Element[] knownElements) {
 
 		setBorder(new TitledBorder("Controls"));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -42,7 +42,7 @@ public class ControlsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				elements.evolve();
+				elements.tick();
 			}
 		});
 		add(tickOnce);
@@ -57,7 +57,7 @@ public class ControlsPanel extends JPanel {
 		});
 		ticker.control.throwEvent();
 
-		ElementSelector es = new ElementSelector();
+		ElementSelector es = new ElementSelector(knownElements);
 		selection = es.selection;
 		add(es);
 
@@ -68,7 +68,7 @@ public class ControlsPanel extends JPanel {
 	public static class ThousandTickerPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
-		public ThousandTickerPanel(FullGrid elements, TickThread ticker) {
+		public ThousandTickerPanel(UsefullFullGrid elements, TickThread ticker) {
 			IntegerValue progresMeas = new IntegerValue(0, "Progress");
 			final JButton tickThousand = new JButton();
 			AbstractAction a = new AbstractAction("Tick 1000") {
@@ -81,7 +81,7 @@ public class ControlsPanel extends JPanel {
 					Runnable r = new Runnable() {
 						@Override
 						public void run() {
-							elements.evolve(progresMeas);
+							elements.tick(progresMeas);
 							progresMeas.set(0);
 							tickThousand.setEnabled(true);
 						}

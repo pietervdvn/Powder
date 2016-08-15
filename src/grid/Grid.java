@@ -9,6 +9,11 @@ public class Grid extends AbstractGrid<Double>{
 		super(dotsX, dotsY);
 		grid = new double[dotsX][dotsY ];
 	}
+	
+	public Grid(double[][] contents){
+		super(contents.length, contents[0].length);
+		grid = contents;
+	}
 
 	public void setValue(int x, int y, double t) {
 		checkBounds(x, y);
@@ -56,6 +61,10 @@ public class Grid extends AbstractGrid<Double>{
 			}
 		}
 		return sum;
+	}
+	
+	public int surface() {
+		return dotsX*dotsY;
 	}
 	
 	public void change(int x, int y, double d) {

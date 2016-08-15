@@ -1,0 +1,25 @@
+name: the name of the element. Should be unique, not case sensitive
+colorred, colorgreen, colorblue: the RGB-color of the element
+
+condensPoint: Point where the element condenses
+densityAtLowest: Density of the element at that temperature
+enthalpyCold: How much heat is given to the environment when condensing | Default: 0
+pressureCold: How much pressure taken to the environment when condensing | Default: 0
+cooledState: What the element condenses to | Default: Null. Means will never condens
+
+vaporPoint: Point where the element vaporizes
+densityAtHighest: Density of the element at that temperature
+enthalpyHot: How much heat is taken from the environment when condensing | Default: 0
+pressureHot: How much pressure given to the environment when condensing | Default: 0
+heatedState: t the element vaporizes to | Default: Null. Means will never vaporize
+
+fixed: meta-element. If 1, can't move and wont contribute to pressure.
+movability: probability to move with a neighbor. Use 0 if it must stay in place, but contribute to pressure | Default: 0
+movabilitySame: probability to move with a neighbor which is the same element | Default: moveability
+
+heatExchange: probability to exchange heat with another element | Default: 0
+heatExchangeSame: probability to exchange heat with the same element | Default: heatExchange
+
+pressureExchange: probability to exchange pressure with another element | Default: 0
+pressureExchangeSame: probability to exchange pressure with the same element | Default: pressureExchange
+

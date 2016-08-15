@@ -1,15 +1,15 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import grid.DubbleGrid;
-import grid.FullGrid;
-import levels.Level;
+import grid.Grid;
+import grid2.Element;
+import grid2.UsefullFullGrid;
 import levels.Levels;
 import reactivity.ValueListener;
 import reactivity.resources.guiColorModel.GUIColorModel;
@@ -33,14 +33,14 @@ public class PowderWindow extends JFrame {
 		}
 	};
 
-	public PowderWindow(GUIColorModel cm, FullGrid elements, int pixelsPerDot) {
+	public PowderWindow(GUIColorModel cm, UsefullFullGrid elements, Element[] knownElements, int pixelsPerDot) {
 
 		RenderingJPanel renderP = new RenderingJPanel(pixelsPerDot);
 
-		DubbleGrid temperature = elements.getTemperature();
+		DubbleGrid temperature = new DubbleGrid(elements.temperature0, elements.temperature1);
 		Render renderTemp = new GridRender(temperature, new TemperatureRender(pixelsPerDot, pixelsPerDot));
 		Render renderElements = new ElementRender(elements, pixelsPerDot, pixelsPerDot);
-		Render renderPressure = new GridRender(elements.getPressure(), new PressureRender(pixelsPerDot, pixelsPerDot));
+		Render renderPressure = new GridRender(new Grid(elements.staticPressure), new PressureRender(pixelsPerDot, pixelsPerDot));
 
 		renderP.addRenderer(renderElements, "Elements");
 		renderP.addRenderer(renderTemp, "Temperature");
@@ -55,13 +55,13 @@ public class PowderWindow extends JFrame {
 		JPanel extras = new JPanel();
 		extras.setLayout(new BoxLayout(extras, BoxLayout.Y_AXIS));
 
-		ControlsPanel cp = new ControlsPanel(cm, elements, ticker, renderP.getRenderToggles());
+		ControlsPanel cp = new ControlsPanel(cm, elements, ticker, renderP.getRenderToggles(), knownElements);
 
 		p = new Pencil(elements, renderP.mousePressed, renderP.mouseX, renderP.mouseY, cp.selection, elements.ticks, cp.pencilSize);
 
 		extras.add(cp);
 
-		extras.add(new StatsPanel(cm, elements));
+		extras.add(new StatsPanel(cm, elements, temperature));
 
 		extras.add(new PresetLevelLoaderControlPanel(elements, ticker, Levels.presets));
 

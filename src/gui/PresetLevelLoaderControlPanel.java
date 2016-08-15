@@ -11,14 +11,15 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 import grid.FullGrid;
-import levels.Level;
+import grid2.UsefullFullGrid;
+import levels.AbstractLevel;
 import reactivity.gui.Button;
 import reactivity.valueWrappers.BooleanValue.Not;
 
 public class PresetLevelLoaderControlPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	public PresetLevelLoaderControlPanel(FullGrid fg, TickThread t, List<Level> levels) {
+	public PresetLevelLoaderControlPanel(UsefullFullGrid fg, TickThread t, List<AbstractLevel> levels) {
 		setBorder(new TitledBorder("Preset levels"));
 		if (levels == null || levels.size() == 0) {
 			add(new JLabel("No preset levels found!"));
@@ -28,7 +29,7 @@ public class PresetLevelLoaderControlPanel extends JPanel {
 		setLayout(new GridLayout(3, 2));
 
 		List<Button> allButtons = new ArrayList<>();
-		for (Level l : levels) {
+		for (AbstractLevel l : levels) {
 			allButtons.add(createButton(t, l, allButtons, fg));
 		}
 		allButtons.forEach(buttons -> add(buttons));
@@ -36,18 +37,19 @@ public class PresetLevelLoaderControlPanel extends JPanel {
 
 	}
 
-	private Button createButton(TickThread t, final Level l, final List<Button> allButtons, FullGrid fg) {
-		Button b = new Button(l.name());
+	private Button createButton(TickThread t, final AbstractLevel l, final List<Button> allButtons,
+			UsefullFullGrid fg) {
+		Button b = new Button(l.name);
 		b.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
 				Runnable precontrol = new Runnable() {
-					
+
 					@Override
 					public void run() {
-						b.setText(l.name() + " (loading...)");
+						b.setText(l.name + " (loading...)");
 						allButtons.forEach(button -> button.setEnabled(false));
 					}
 				};
@@ -56,7 +58,7 @@ public class PresetLevelLoaderControlPanel extends JPanel {
 
 					@Override
 					public void run() {
-						b.setText(l.name());
+						b.setText(l.name);
 						allButtons.forEach(button -> button.setEnabled(true));
 					}
 				};

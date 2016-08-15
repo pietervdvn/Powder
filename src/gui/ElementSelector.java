@@ -7,19 +7,20 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import elements.Element;
-import elements.Elements;
+import grid2.Element;
 import reactivity.valueWrappers.Value;
 
 public class ElementSelector extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -1935925059529481503L;
 
-	public Value<Element> selection = new Value<Element>(elements.Elements.AIR.behaviour, "Element selection");
-	private final JComboBox<Elements> combo;
+	public Value<Element> selection;
+	
+	private final JComboBox<Element> combo;
 
-	public ElementSelector() {
+	public ElementSelector(Element[] knownElements) {
+	selection	= new Value<Element>(knownElements[0], "Element selection");
 		add(new JLabel("Element to draw: "));
-		combo = new JComboBox<>(elements.Elements.values());
+		combo = new JComboBox<>(knownElements);
 		this.add(combo);
 		combo.addActionListener(this);
 		actionPerformed(null);
@@ -27,7 +28,7 @@ public class ElementSelector extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		selection.set(((Elements) combo.getSelectedItem()).behaviour);
+		selection.set((Element) combo.getSelectedItem());
 	}
 
 }

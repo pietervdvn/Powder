@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import elements.Element;
 import elements.Elements;
-import levels.Level;
+import levels.AbstractLevel;
 import reactivity.valueWrappers.IntegerValue;
 
 public class FullGrid extends AbstractGrid<Element> {
@@ -44,7 +44,7 @@ public class FullGrid extends AbstractGrid<Element> {
 		}
 	}
 
-	public void init(Level l) {
+	public void init(AbstractLevel l) {
 		reset(Elements.AIR.behaviour);
 		getTemperature().reset(275);
 		for (int x = 0; x < dotsX; x++) {
@@ -89,13 +89,13 @@ public class FullGrid extends AbstractGrid<Element> {
 		temperature.exchangeHeat(elements.getRaw());
 		weights.calcWeights(temperature.getRaw(), elements.getRaw());
 		elements.changeState(temperature.getRaw(), basePressure.getRaw());
+		elements.interact(temperature.getRaw());
 		elements.moveAround(this, weights.getRaw());
 
 		int fixedCols = basePressure.calculateStructuralPressure(moveable, 
 				weights.getRaw(), 10.0, taintedColumns);
 		this.fixedColumns.set(fixedCols);
 
-		elements.interact(temperature.getRaw());
 
 	}
 

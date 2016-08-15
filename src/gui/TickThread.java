@@ -1,6 +1,6 @@
 package gui;
 
-import grid.FullGrid;
+import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.IntegerValue;
@@ -12,9 +12,9 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 	public BooleanValue controlLocked = new BooleanValue(false, "Control is toggable");
 	public IntegerValue timeout = new IntegerValue(0, "Time between ticks");
 
-	private final FullGrid fg;
+	private final UsefullFullGrid fg;
 
-	public TickThread(FullGrid fg) {
+	public TickThread(UsefullFullGrid fg) {
 		this.fg = fg;
 		control.addListener(this);
 	}
@@ -65,7 +65,7 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 		try {
 			while (true) {
 				if (control.get()) {
-					fg.evolve();
+					fg.tick();
 					Thread.sleep(timeout.get());
 				} else {
 					synchronized (control) {

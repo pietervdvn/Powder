@@ -1,21 +1,21 @@
 package gui;
 
-import elements.Element;
-import grid.FullGrid;
+import grid2.Element;
+import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.valueWrappers.Value;
 
 @SuppressWarnings("rawtypes")
 public class Pencil implements ValueListener {
 
-	private final FullGrid fg;
+	private final UsefullFullGrid fg;
 	private final Value<Integer> mouseX, mouseY;
 	private final Value<Element> selection;
 	private final Value<Boolean> mousePressed;
 	private final Value<Integer> pencilSize;
 
 	@SuppressWarnings("unchecked")
-	public Pencil(FullGrid fg, Value<Boolean> mousePressed, Value<Integer> mouseX, Value<Integer> mouseY,
+	public Pencil(UsefullFullGrid fg, Value<Boolean> mousePressed, Value<Integer> mouseX, Value<Integer> mouseY,
 			Value<Element> selection, Value<Integer> ticker, Value<Integer> pencilSize) {
 		this.fg = fg;
 		this.mousePressed = mousePressed;
@@ -43,7 +43,7 @@ public class Pencil implements ValueListener {
 			for (int x = -size; x <= size; x++) {
 				for (int y = -size; y <= size; y++) {
 					if (Math.sqrt(x * x + y * y) <= size) {
-						fg.put(mouseX.get() + x, mouseY.get() + y, selection.get());
+						fg.setValue(mouseX.get() + x, mouseY.get() + y, selection.get());
 					}
 				}
 			}

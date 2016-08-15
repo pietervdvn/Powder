@@ -131,8 +131,8 @@ public class ElementsGrid extends AbstractGrid<Element> {
 					continue;
 				}
 
-				int reactN = grid[x][y].i * Reactions.nrOfElements
-						+ grid[x0][y0].i;
+				int reactN = grid[x][y].integerRepresentation * Reactions.nrOfElements
+						+ grid[x0][y0].integerRepresentation;
 
 				int i = Reactions.reactionIndex[reactN];
 				if (i == -1) {
