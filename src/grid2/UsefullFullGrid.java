@@ -15,17 +15,15 @@ import reactivity.valueWrappers.IntegerValue;
 public class UsefullFullGrid extends FullGrid {
 
 	public final IntegerValue ticks = new IntegerValue(0, "Clock");
-	public final IntegerValue timeout = new IntegerValue(15, "Timout between ticks (ms)");
-	public final IntegerValue updateTime = new IntegerValue(0, "time for latest update (ms)");
+	public final IntegerValue neededTime = new IntegerValue(0, "needed time for latest update (ms)");
 
 	private final Map<String, Element> name2elements;
 	private final Element[] id2Elements;
 
-
-	public UsefullFullGrid(Map<String, Element> elements, Element[] idElements, int dotsX, int dotsY) {
-		super(dotsX, dotsY);
+	public UsefullFullGrid(Map<String, Element> elements, Element[] knownElements, int dotsX, int dotsY) {
+		super(dotsX, dotsY, new ElementIndexing(knownElements));
 		this.name2elements = elements;
-		this.id2Elements = idElements;
+		this.id2Elements = knownElements;
 	}
 
 	/**
@@ -33,22 +31,16 @@ public class UsefullFullGrid extends FullGrid {
 	 */
 	public void tick() {
 		// TODO Auto-generated method stub
-		
+
 		long start = System.currentTimeMillis();
-		
-		
+
 		long stop = System.currentTimeMillis();
-		
-		updateTime.set((int) (stop - start));
+
+		neededTime.set((int) (stop - start));
 		ticks.set(ticks.get() + 1);
-		try {
-			Thread.sleep(timeout.get());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
-	
-	public void tick(IntegerValue progressMeas){
+
+	public void tick(IntegerValue progressMeas) {
 		// TODO
 	}
 
@@ -61,6 +53,10 @@ public class UsefullFullGrid extends FullGrid {
 			}
 		}
 		l.seed(this);
+		forceCleanCalculate();
+		if (ticks.get() == 0) {
+			ticks.throwEvent();
+		}
 		ticks.set(0);
 	}
 
@@ -98,7 +94,7 @@ public class UsefullFullGrid extends FullGrid {
 	}
 
 	public Color getColor(int x, int y) {
-		int id = Math.max(0, elements[x][y]-1);
+		int id = Math.max(0, elements[x][y] - 1);
 		Element e = id2Elements[id];
 		return e.color;
 	}

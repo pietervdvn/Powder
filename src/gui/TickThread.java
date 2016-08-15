@@ -10,9 +10,11 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 
 	public BooleanValue control = new BooleanValue(true, "Render (play/pause)");
 	public BooleanValue controlLocked = new BooleanValue(false, "Control is toggable");
-	public IntegerValue timeout = new IntegerValue(0, "Time between ticks");
+	public IntegerValue timeout = new IntegerValue(15, "Time between ticks");
 
 	private final UsefullFullGrid fg;
+
+	private Boolean isUpdating = false;
 
 	public TickThread(UsefullFullGrid fg) {
 		this.fg = fg;
@@ -24,30 +26,31 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 	 * simulation when 'r' is performed. If the simulation wasn't running, only
 	 * runs 'r'
 	 * 
-	 * Precontrol is run befor the actual halting (e.g. to disable gui elements)
+	 * Precontrol is run before the actual halting (e.g. to disable gui
+	 * elements)
 	 */
 	public void pauseWhile(Runnable precontrol, Runnable r, Runnable postControl) {
 		boolean running;
-		synchronized (control) {
-			running = control.get();
-			if (precontrol != null) {
-				precontrol.run();
-			}
-			controlLocked.set(true);
-			control.set(false);
-			try {
-				if (running) {
-					control.wait();
-				}
-
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
+		running = control.get();
+		if (precontrol != null) {
+			precontrol.run();
 		}
+		controlLocked.set(true);
+		control.set(false);
+
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
+				synchronized (isUpdating) {
+					while (isUpdating) {
+						try {
+							isUpdating.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 				r.run();
 
 				control.set(running);
@@ -55,8 +58,8 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 				if (postControl != null) {
 					postControl.run();
 				}
-				
 			}
+
 		}).start();
 	}
 
@@ -65,7 +68,12 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 		try {
 			while (true) {
 				if (control.get()) {
-					fg.tick();
+					synchronized (isUpdating) {
+						isUpdating = true;
+						fg.tick();
+						isUpdating = false;
+						isUpdating.notifyAll();
+					}
 					Thread.sleep(timeout.get());
 				} else {
 					synchronized (control) {

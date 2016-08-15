@@ -1,6 +1,6 @@
 package grid2;
 
-import elements.Element;
+import grid2.Element;
 
 public class ElementIndexing {
 	
@@ -15,7 +15,7 @@ public class ElementIndexing {
 	public int getCompositeNumber(Element[] baseElements){
 		int index = 0;
 		for (int i = baseElements.length; i >= 0; i--) {
-			index = index * totalNumberOfElements + baseElements[i].integerRepresentation;
+			index = index * totalNumberOfElements + baseElements[i].id;
 		}
 		return index;
 	}

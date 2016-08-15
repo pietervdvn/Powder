@@ -13,8 +13,8 @@ import grid2.Element;
 import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.gui.ProgressMeter;
+import reactivity.gui.Sliderbar;
 import reactivity.gui.Toggle;
-import reactivity.gui.coloringTextField.IntegerValueTextField;
 import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.BooleanValue.Not;
@@ -35,6 +35,7 @@ public class ControlsPanel extends JPanel {
 		playPause.setEnabled(new Not(ticker.controlLocked));
 
 		add(playPause);
+		add(new Sliderbar(cm, ticker.timeout, 0, 1000));
 		add(new ToggleOptions(toggles, true));
 
 		JButton tickOnce = new JButton(new AbstractAction("Tick Once") {
@@ -61,7 +62,7 @@ public class ControlsPanel extends JPanel {
 		selection = es.selection;
 		add(es);
 
-		add(new IntegerValueTextField(cm, pencilSize, 1, 50));
+		add(new Sliderbar(cm, pencilSize, 1, 50));
 		
 	}
 

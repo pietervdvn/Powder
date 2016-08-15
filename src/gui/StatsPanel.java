@@ -32,7 +32,7 @@ public class StatsPanel extends JPanel {
 			}
 		});
 		add(new ValueField<>(cm, elements.ticks));
-		add(new ValueField<>(cm, elements.updateTime));
+		add(new ValueField<>(cm, elements.neededTime));
 		add(new ValueField<>(cm, averageTemperature));
 	}
 

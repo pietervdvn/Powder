@@ -47,6 +47,7 @@ public class Pencil implements ValueListener {
 					}
 				}
 			}
+			fg.forceCleanCalculate();
 			if(!recursiveCall){
 				recursiveCall = true;
 				fg.ticks.throwEvent();

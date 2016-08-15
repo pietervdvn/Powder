@@ -32,7 +32,6 @@ public class Main {
 
 	public static void main0(String[] args) throws InterruptedException, IOException {
 
-		System.out.println("Parsing"); // TODO remove sysout
 		List<String> fromFile = Files.readAllLines(Paths.get("elements.csv"));
 
 		Element[] els = ParseElements.parseElements(fromFile);
