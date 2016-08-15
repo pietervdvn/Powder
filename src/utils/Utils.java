@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.Map;
 import java.util.Random;
 
-import elements.Element;
-import elements.Elements;
+import grid2.Element;
+
 
 public class Utils {
 
@@ -14,10 +14,6 @@ public class Utils {
 
 	private final static Random r = new Random();
 	
-	public static Elements[] knownElements(){
-		return Elements.values();
-	}
-
 	public static boolean p(double d) {
 		return r.nextDouble() < d;
 	}

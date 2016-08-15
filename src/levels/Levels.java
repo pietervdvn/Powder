@@ -1,21 +1,10 @@
 package levels;
 
-import static elements.Elements.AIR;
-import static elements.Elements.BLOCK;
-import static elements.Elements.CONDENSOR;
-import static elements.Elements.SALT;
-import static elements.Elements.SAND;
-import static elements.Elements.VAPOR;
-import static elements.Elements.VAPORIZER;
-import static elements.Elements.VINE;
-import static elements.Elements.WATER;
 import static utils.Utils.p;
 
 import java.util.Arrays;
 import java.util.List;
 
-import grid.ElementsGrid;
-import grid.Temperature;
 import grid2.UsefullFullGrid;
 
 public class Levels {

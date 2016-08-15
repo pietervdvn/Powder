@@ -1,2 +1,2 @@
-element0,element1,result0,result1,prob
-salt,water,salt_water,water,0.01
+element0,element1,result0,result1,prob,enthalpy,pressure
+salt,water,salt_water,water,0.01,,

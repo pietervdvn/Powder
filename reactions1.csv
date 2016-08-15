@@ -1,3 +1,3 @@
-element,result,prob
-salt_water_decay,salt,0.5
-salt_water_decay,water,0.5
+element,result,prob,enthalpy,pressure
+heater,heater,1,10,
+cooler,cooler,1,-10,

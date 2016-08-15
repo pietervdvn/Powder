@@ -26,7 +26,24 @@ heatExchangeSame: probability to exchange heat with the same element | Default: 
 pressureExchange: probability to exchange pressure with another element | Default: 0
 pressureExchangeSame: probability to exchange pressure with the same element | Default: pressureExchange
 
-Reactions2.csv
--------------
+Reactions1.csv
+--------------
 
-Reactions between two elements
+Decay of elements
+
+Element: the element that decays
+Result: the element it results in
+Enthalpy: the heat it gives to the environment
+Pressure: the pressure it gives to the environment
+
+
+Reactions2.csv
+--------------
+
+Reactions between 2 elements.
+
+element0, element1: the two elements which react with each other
+result0, result1: the elements they become
+prob: the probability of the reaction happening
+enthalpy: the heat that is given to the environment
+pressure: the pressure that is given to the environment

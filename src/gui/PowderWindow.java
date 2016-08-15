@@ -23,8 +23,6 @@ import rendering.TemperatureRender;
 public class PowderWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	private final Pencil p;
-	
 	private final ValueListener<Integer> repainter = new ValueListener<Integer>() {
 
 		@Override
@@ -57,7 +55,7 @@ public class PowderWindow extends JFrame {
 
 		ControlsPanel cp = new ControlsPanel(cm, elements, ticker, renderP.getRenderToggles(), knownElements);
 
-		p = new Pencil(elements, renderP.mousePressed, renderP.mouseX, renderP.mouseY, cp.selection, elements.ticks, cp.pencilSize);
+		new Pencil(elements, renderP.mousePressed, renderP.mouseX, renderP.mouseY, cp.selection, elements.ticks, cp.pencilSize);
 
 		extras.add(cp);
 

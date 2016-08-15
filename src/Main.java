@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import grid.FullGrid;
 import grid2.Element;
 import grid2.ElementIndexing;
 import grid2.ParseElements;
@@ -17,10 +16,6 @@ import gui.PowderWindow;
 import reactivity.resources.guiColorModel.GUIColorModel;
 
 public class Main {
-
-	public static void seedR(FullGrid elements, int w, int h) {
-
-	}
 
 	public static void main(String[] args) {
 		try {
@@ -65,7 +60,7 @@ public class Main {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		PowderWindow w = new PowderWindow(cm, elements, els, pixelsDot);
+		new PowderWindow(cm, elements, els, pixelsDot);
 
 	}
 }

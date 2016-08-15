@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import grid.FullGrid;
 import grid2.UsefullFullGrid;
 import levels.AbstractLevel;
 import reactivity.gui.Button;
