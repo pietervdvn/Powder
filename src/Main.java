@@ -1,16 +1,17 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import grid.FullGrid;
 import grid2.Element;
+import grid2.ElementIndexing;
 import grid2.ParseElements;
+import grid2.Reaction;
+import grid2.ReactionCache;
 import grid2.UsefullFullGrid;
 import gui.PowderWindow;
 import reactivity.resources.guiColorModel.GUIColorModel;
@@ -35,12 +36,18 @@ public class Main {
 		List<String> fromFile = Files.readAllLines(Paths.get("elements.csv"));
 
 		Element[] els = ParseElements.parseElements(fromFile);
-		
-		Map<String, Element> name2element = new HashMap<>();
-		for (Element element : els) {
-			name2element.put(element.name.toUpperCase(), element);
+
+		for (Element e : els) {
+			System.out.println(e); // TODO remove sysout
 		}
-		
+		fromFile = Files.readAllLines(Paths.get("reactions2.csv"));
+
+		ElementIndexing indexer = new ElementIndexing(els);
+		Reaction[] loadedReactions = Reaction.fromCSVs(indexer, fromFile);
+		for (Reaction reaction : loadedReactions) {
+			System.out.println(reaction); // TODO remove sysout
+		}
+		ReactionCache reactions = new ReactionCache(indexer, loadedReactions);
 
 		int dotsX = 400;
 		int dotsY = 100;
@@ -48,7 +55,7 @@ public class Main {
 		int pixelsTargetX = 1200;
 		int pixelsDot = pixelsTargetX / dotsX;
 
-		UsefullFullGrid elements = new UsefullFullGrid(name2element, els, dotsX, dotsY);
+		UsefullFullGrid elements = new UsefullFullGrid(indexer, reactions, dotsX, dotsY);
 
 		GUIColorModel cm = new GUIColorModel();
 

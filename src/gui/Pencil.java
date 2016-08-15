@@ -43,7 +43,7 @@ public class Pencil implements ValueListener {
 			for (int x = -size; x <= size; x++) {
 				for (int y = -size; y <= size; y++) {
 					if (Math.sqrt(x * x + y * y) <= size) {
-						fg.setValue(mouseX.get() + x, mouseY.get() + y, selection.get());
+						fg.spawnValue(mouseX.get() + x, mouseY.get() + y, selection.get());
 					}
 				}
 			}

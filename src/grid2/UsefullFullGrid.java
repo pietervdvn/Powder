@@ -1,7 +1,6 @@
 package grid2;
 
 import java.awt.Color;
-import java.util.Map;
 
 import levels.AbstractLevel;
 import reactivity.valueWrappers.IntegerValue;
@@ -17,13 +16,8 @@ public class UsefullFullGrid extends FullGrid {
 	public final IntegerValue ticks = new IntegerValue(0, "Clock");
 	public final IntegerValue neededTime = new IntegerValue(0, "needed time for latest update (ms)");
 
-	private final Map<String, Element> name2elements;
-	private final Element[] id2Elements;
-
-	public UsefullFullGrid(Map<String, Element> elements, Element[] knownElements, int dotsX, int dotsY) {
-		super(dotsX, dotsY, new ElementIndexing(knownElements));
-		this.name2elements = elements;
-		this.id2Elements = knownElements;
+	public UsefullFullGrid(ElementIndexing knownElements, ReactionCache reactions, int dotsX, int dotsY) {
+		super(dotsX, dotsY, knownElements, reactions);
 	}
 
 	/**
@@ -34,6 +28,8 @@ public class UsefullFullGrid extends FullGrid {
 
 		long start = System.currentTimeMillis();
 
+		evolve();
+
 		long stop = System.currentTimeMillis();
 
 		neededTime.set((int) (stop - start));
@@ -41,7 +37,20 @@ public class UsefullFullGrid extends FullGrid {
 	}
 
 	public void tick(IntegerValue progressMeas) {
-		// TODO
+		
+		int total = progressMeas.get();
+		
+		long start = System.currentTimeMillis();
+		
+		for (int i = 1; i < total; i++) {
+			evolve();
+			progressMeas.set(i);
+			
+		}
+		long stop = System.currentTimeMillis();
+		
+		neededTime.set((int) (stop - start));
+		ticks.set(ticks.get() + total);
 	}
 
 	public void init(AbstractLevel l) {
@@ -49,7 +58,7 @@ public class UsefullFullGrid extends FullGrid {
 			for (int y = 0; y < dotsY; y++) {
 				temperature0[x][y] = l.defaultTemp;
 				temperature1[x][y] = l.defaultTemp;
-				setValue(x, y, l.defaultElement);
+				spawnValue(x, y, l.defaultElement);
 			}
 		}
 		l.seed(this);
@@ -65,13 +74,13 @@ public class UsefullFullGrid extends FullGrid {
 	}
 
 	public void fillStretch(int x, int y, int w, int h, String element) {
-		Element e = name2elements.get(element.toUpperCase());
+		Element e = indexer.fromName(element);
 		fillStretch(x, y, w, h, e);
 	}
 
-	public void setValue(int x, int y, String element) {
-		Element e = name2elements.get(element.toUpperCase());
-		setValue(x, y, e);
+	public void spawnValue(int x, int y, String element) {
+		Element e = indexer.fromName(element);
+		spawnValue(x, y, e);
 	}
 
 	public void fillStretch(int x, int y, int w, int h, Element value) {
@@ -80,7 +89,7 @@ public class UsefullFullGrid extends FullGrid {
 		}
 		for (int xi = x; xi < x + w; xi++) {
 			for (int yi = y; yi < y + h; yi++) {
-				setValue(xi, yi, value);
+				spawnValue(xi, yi, value);
 			}
 		}
 	}
@@ -94,8 +103,6 @@ public class UsefullFullGrid extends FullGrid {
 	}
 
 	public Color getColor(int x, int y) {
-		int id = Math.max(0, elements[x][y] - 1);
-		Element e = id2Elements[id];
-		return e.color;
+		return grid[x][y].color;
 	}
 }

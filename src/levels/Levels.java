@@ -33,7 +33,7 @@ public class Levels {
 		public void seed(UsefullFullGrid g) {
 			for (int x = 0; x < g.dotsX; x++) {
 				for (int y = 0; y < g.dotsY; y++) {
-					g.setValue(x, y, p(0.5) ? "VAPOR" : "AIR");
+					g.spawnValue(x, y, p(0.5) ? "VAPOR" : "AIR");
 				}
 			}
 		}
@@ -95,7 +95,7 @@ public class Levels {
 			elements.fillStretch(1, 25, 50, 5, "SAND");
 			elements.fillStretch(1, 30, 90, 5, "SAND");
 
-			elements.fillStretch(1, 1, 50, 10, "WATER");
+		//	elements.fillStretch(1, 1, 50, 10, "WATER");
 			elements.fillStretch(0, 0, 1, h, "CONDENSOR");
 		}
 	};

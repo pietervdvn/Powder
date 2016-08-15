@@ -20,6 +20,9 @@ public class Element {
 
 	public final String name;
 	public final Color color;
+	// -1 == use environment
+	public final int spawnTemperature;
+	
 
 	public final double condensPoint;
 	public final double densityAtLowest;
@@ -47,13 +50,14 @@ public class Element {
 	public final double weightDiff;
 	public final double tempRange;
 
-	public Element(int id, String name, Color color, double densityAtLowest, double condensPoint, double enthalpyCold,
+	public Element(int id, String name, Color color, int spawnTemperature, double densityAtLowest, double condensPoint, double enthalpyCold,
 			double pressureCold, int cooledState, double densityAtHighest, double vaporPoint, double enthalpyHot,
 			double pressureHot, int heatedState, int fixed, double movabiltiy, double movabilitySame,
 			double heatExchange, double heatExchangeSame, double pressureExchange, double pressureExchangeSame) {
 		this.id = id;
 		this.name = name.substring(0, 1) + name.substring(1).toLowerCase();
 		this.color = color;
+		this.spawnTemperature = spawnTemperature;
 		this.densityAtLowest = densityAtLowest;
 		this.condensPoint = condensPoint;
 		this.enthalpyCold = enthalpyCold;
@@ -92,7 +96,7 @@ public class Element {
 	}
 
 	public void crossValidate(Element[] otherElements) {
-		if (heatedState >= otherElements.length) {
+		if (heatedState > otherElements.length) {
 			ve("Element ID " + heatedState + " for heated state of " + name + " does not exist (out of bounds)");
 		}
 		if (cooledState >= otherElements.length) {
@@ -107,6 +111,14 @@ public class Element {
 		}
 		if (condensPoint >= vaporPoint) {
 			ve("Condens point is higher then the vapor point");
+		}
+		if(fixed == 1){
+			if(movability != 0.0){
+				ve("If the element is fixed, moveability should be 0.0");
+			}
+			if(movabilitySame != 0.0){
+				ve("If the element is fixed, moveabilitySame should be 0.0");
+			}
 		}
 		gz("condensPoint", condensPoint);
 		gz("vaporPoint", vaporPoint);
@@ -128,6 +140,7 @@ public class Element {
 		String name = csv.get("name").stringValue;
 		Color color = new Color(csv.get("colorred").intWithDefault(0), csv.get("colorgreen").intWithDefault(0),
 				csv.get("colorblue").intWithDefault(0));
+		int spawnTemperature = csv.get("spawnTemperature").intWithDefault(-1);
 
 		double condensPoint = csv.get("condensPoint").doubleWithDefault(0);
 		double densityAtLowest = csv.get("densityAtLowest").doubleValue;
@@ -160,7 +173,7 @@ public class Element {
 		double pressureExchange = csv.get("pressureExchange").doubleWithDefault(0);
 		double pressureExchangeSame = csv.get("pressureExchangeSame").doubleWithDefault(pressureExchange);
 
-		return new Element(id, name, color, densityAtLowest, condensPoint, enthalpyCold, pressureCold, cooledState,
+		return new Element(id, name, color, spawnTemperature, densityAtLowest, condensPoint, enthalpyCold, pressureCold, cooledState,
 				densityAtHighest, vaporPoint, enthalpyHot, pressureHot, heatedState, fixed, movabiltiy, movabilitySame,
 				heatExchange, heatExchangeSame, pressureExchange, pressureExchangeSame);
 
