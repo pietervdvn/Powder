@@ -16,8 +16,9 @@ public class UsefullFullGrid extends Simulation {
 	public final IntegerValue ticks = new IntegerValue(0, "Clock");
 	public final IntegerValue neededTime = new IntegerValue(0, "needed time for latest update (ms)");
 
-	public UsefullFullGrid(ElementIndexing knownElements, ReactionCache reactions, int dotsX, int dotsY) {
-		super(dotsX, dotsY, knownElements, reactions);
+	public UsefullFullGrid(ElementIndexing knownElements, DecayCache dc, ReactionCache reactions, int dotsX,
+			int dotsY) {
+		super(dotsX, dotsY, knownElements, dc, reactions);
 	}
 
 	/**
@@ -37,18 +38,18 @@ public class UsefullFullGrid extends Simulation {
 	}
 
 	public void tick(IntegerValue progressMeas) {
-		
+
 		int total = progressMeas.get();
-		
+
 		long start = System.currentTimeMillis();
-		
+
 		for (int i = 1; i < total; i++) {
 			evolve();
 			progressMeas.set(i);
-			
+
 		}
 		long stop = System.currentTimeMillis();
-		
+
 		neededTime.set((int) (stop - start));
 		ticks.set(ticks.get() + total);
 	}
@@ -56,7 +57,7 @@ public class UsefullFullGrid extends Simulation {
 	public void init(AbstractLevel l) {
 		for (int x = 0; x < dotsX; x++) {
 			for (int y = 0; y < dotsY; y++) {
-				temperature0[x][y] = l.defaultTemp;
+				temperature[x][y] = l.defaultTemp;
 				spawnValue(x, y, l.defaultElement);
 			}
 		}

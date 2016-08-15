@@ -139,7 +139,7 @@ public class Element {
 	public static Element fromCSV(int id, Map<String, Integer> elementIDs, Map<String, CSVEntry> csv) {
 		String name = csv.get("name").stringValue;
 		Color color = new Color(csv.get("colorred").intWithDefault(0), csv.get("colorgreen").intWithDefault(0),
-				csv.get("colorblue").intWithDefault(0));
+				csv.get("colorblue").intWithDefault(0), csv.get("coloralpha").intWithDefault(255));
 		int spawnTemperature = csv.get("spawnTemperature").intWithDefault(-1);
 
 		double condensPoint = csv.get("condensPoint").doubleWithDefault(0);

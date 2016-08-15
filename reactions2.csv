@@ -1,2 +1,8 @@
 element0,element1,result0,result1,prob,enthalpy,pressure
-salt,water,salt_water,water,0.01,,
+salt,water,salt_water,salt_water,0.01,,
+sand,water,wet_sand,wet_sand,0.9,,
+vine,wet_sand,vine_watered,vine_root,0.9,,
+vine_root,wet_sand,Vine_root_watered,sand,1,,
+Vine_root_watered,vine,vine_root,vine_watered,1,,
+vine_watered,vine,vine,vine_watered,0.5,,
+vine_watered,air,vine,vine_bast,,,

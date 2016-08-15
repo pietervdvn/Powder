@@ -5,13 +5,13 @@ name: the name of the element. Should be unique, not case sensitive
 colorred, colorgreen, colorblue: the RGB-color of the element
 
 condensPoint: Point where the element condenses
-densityAtLowest: Density of the element at that temperature
+densityAtLowest: Density (weight) of the element at that temperature
 enthalpyCold: How much heat is given to the environment when condensing | Default: 0
 pressureCold: How much pressure taken to the environment when condensing | Default: 0
 cooledState: What the element condenses to | Default: Null. Means will never condens
 
 vaporPoint: Point where the element vaporizes
-densityAtHighest: Density of the element at that temperature
+densityAtHighest: Density (weight) of the element at that temperature
 enthalpyHot: How much heat is taken from the environment when condensing | Default: 0
 pressureHot: How much pressure given to the environment when condensing | Default: 0
 heatedState: t the element vaporizes to | Default: Null. Means will never vaporize

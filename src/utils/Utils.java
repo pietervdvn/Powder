@@ -29,6 +29,10 @@ public class Utils {
 		}
 		return 0;
 	}
+	
+	public static double randDouble(){
+		return r.nextDouble();
+	}
 
 	public static double offset(){
 		return r.nextGaussian();

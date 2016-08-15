@@ -16,6 +16,9 @@ public class SimpleCSVParser {
 	public static List<Map<String, CSVEntry>> parseCSV(List<String> lines) {
 
 		String[] header = lines.get(0).split(",");
+		for (int i = 0; i < header.length; i++) {
+			header[i] = header[i].trim();
+		}
 
 		List<Map<String, CSVEntry>> parsed = new ArrayList<>(lines.size() - 1);
 
@@ -26,7 +29,7 @@ public class SimpleCSVParser {
 			for (int j = 0; j < header.length; j++) {
 				String part = j < parts.length ? parts[j] : "";
 				CSVEntry entry = new CSVEntry(part.trim());
-				lineDict.put(header[j].trim(), entry);
+				lineDict.put(header[j], entry);
 			}
 			parsed.add(lineDict);
 		}

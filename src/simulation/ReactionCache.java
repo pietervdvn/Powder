@@ -17,7 +17,7 @@ public class ReactionCache {
 	
 	private void addReaction(Reaction r){
 		reactions[r.element0*numberOfElements + r.element1] = r;
-		reactions[r.element1*numberOfElements + r.element0] = r;
+		reactions[r.element1*numberOfElements + r.element0] = r.swapped();
 
 	}
 	

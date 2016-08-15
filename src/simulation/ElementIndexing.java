@@ -42,4 +42,8 @@ public class ElementIndexing {
 		return elementList.length;
 	}
 	
+	public Element[] getAllElements(){
+		return elementList;
+	}
+	
 }

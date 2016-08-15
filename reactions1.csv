@@ -1,3 +1,12 @@
 element,result,prob,enthalpy,pressure
 heater,heater,1,10,
 cooler,cooler,1,-10,
+magma,magma0,0.005,,
+magma0,magma,0.005,,
+salt_water_decay,water,0.5,,
+salt_water_decay,salt,0.5,,
+vine_root,vine,0.001,,
+vine,vine_dead,0.001,,
+vine_bast,vine,0.001,,
+wet_sand_decay,water,0.5,,
+wet_sand_decay,sand,0.5,,

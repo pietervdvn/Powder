@@ -32,6 +32,10 @@ public class Reaction {
 		this.pressure = pressure;
 	}
 
+	public Reaction swapped() {
+		return new Reaction(indexer, element1, element0, result1, result0, prob, enthalpy, pressure);
+	}
+
 	public void validate() {
 		if (prob < 0.0 || prob > 1.0) {
 			throw new IllegalArgumentException("Probabilities should be >=0 and <= 1");
@@ -43,8 +47,8 @@ public class Reaction {
 		int el1id = indexer.idFromName(csv.get("element1").stringValue);
 		int rel0id = indexer.idFromName(csv.get("result0").stringValue);
 		int rel1id = indexer.idFromName(csv.get("result1").stringValue);
-		return new Reaction(indexer, el0id, el1id, rel0id, rel1id, csv.get("prob").doubleWithDefault(1.0)
-				, csv.get("enthalpy").doubleWithDefault(0.0), csv.get("pressure").doubleWithDefault(0.0));
+		return new Reaction(indexer, el0id, el1id, rel0id, rel1id, csv.get("prob").doubleWithDefault(1.0),
+				csv.get("enthalpy").doubleWithDefault(0.0), csv.get("pressure").doubleWithDefault(0.0));
 	}
 
 	public static Reaction[] fromCSVs(ElementIndexing indexer, List<String> lines) {

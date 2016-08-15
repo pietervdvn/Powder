@@ -16,7 +16,7 @@ import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.resources.guiColorModel.GUIColorModelListener;
 
 
-/**
+/**-
   * Bozels
   * 
   * Door:
@@ -39,6 +39,7 @@ public class ColoringTextField<T> extends JTextField implements
 	private T value = null;
 
 	public ColoringTextField(GUIColorModel colorSettings, Parser<T> parser) {
+		this.setColumns(5);
 		this.addFocusListener(this);
 		this.colorMod = colorSettings;
 		colorSettings.addListener(this);

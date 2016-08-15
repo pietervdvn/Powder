@@ -36,16 +36,18 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 			precontrol.run();
 		}
 		controlLocked.set(true);
-		control.set(false);
+		synchronized (control) {
+			control.set(false);
+		}
 
 		new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				synchronized (isUpdating) {
-					while (isUpdating) {
+				synchronized (this) {
+					if (isUpdating) {
 						try {
-							isUpdating.wait();
+							this.wait();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -53,8 +55,12 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 				}
 				r.run();
 
-				control.set(running);
-				controlLocked.set(false);
+				synchronized (control) {
+					control.set(running);
+					controlLocked.set(false);
+					control.notifyAll();
+				}
+
 				if (postControl != null) {
 					postControl.run();
 				}
@@ -67,12 +73,19 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 	public void run() {
 		try {
 			while (true) {
-				if (control.get()) {
-					synchronized (isUpdating) {
+				boolean run;
+				synchronized (control) {
+					run = control.get();
+				}
+
+				if (run) {
+					synchronized (this) {
 						isUpdating = true;
-						fg.tick();
+					}
+					fg.tick();
+					synchronized (this) {
 						isUpdating = false;
-						isUpdating.notifyAll();
+						this.notifyAll();
 					}
 					Thread.sleep(timeout.get());
 				} else {
@@ -80,7 +93,10 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 						control.notifyAll();
 					}
 					synchronized (this) {
-						this.wait();
+						this.notifyAll();
+					}
+					synchronized (control) {
+						control.wait();
 					}
 				}
 			}
