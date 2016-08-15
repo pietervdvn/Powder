@@ -6,19 +6,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import grid.DubbleGrid;
-import grid.Grid;
-import grid2.Element;
-import grid2.UsefullFullGrid;
+import gui.grid.Grid;
+import gui.rendering.ElementRender;
+import gui.rendering.GridRender;
+import gui.rendering.PressureRender;
+import gui.rendering.Render;
+import gui.rendering.TemperatureRender;
 import levels.Levels;
 import reactivity.ValueListener;
 import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.valueWrappers.Value;
-import rendering.ElementRender;
-import rendering.GridRender;
-import rendering.PressureRender;
-import rendering.Render;
-import rendering.TemperatureRender;
+import simulation.Element;
+import simulation.UsefullFullGrid;
 
 public class PowderWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -35,7 +34,7 @@ public class PowderWindow extends JFrame {
 
 		RenderingJPanel renderP = new RenderingJPanel(pixelsPerDot);
 
-		DubbleGrid temperature = new DubbleGrid(elements.temperature0, elements.temperature1);
+		Grid temperature = new Grid(elements.temperature0);
 		Render renderTemp = new GridRender(temperature, new TemperatureRender(pixelsPerDot, pixelsPerDot));
 		Render renderElements = new ElementRender(elements, pixelsPerDot, pixelsPerDot);
 		Render renderPressure = new GridRender(new Grid(elements.staticPressure), new PressureRender(pixelsPerDot, pixelsPerDot));

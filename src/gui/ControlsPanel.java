@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import grid2.Element;
-import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.gui.ProgressMeter;
 import reactivity.gui.Sliderbar;
@@ -18,6 +16,8 @@ import reactivity.gui.Toggle;
 import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.BooleanValue.Not;
+import simulation.Element;
+import simulation.UsefullFullGrid;
 import reactivity.valueWrappers.IntegerValue;
 import reactivity.valueWrappers.Value;
 

@@ -1,8 +1,8 @@
-package rendering;
+package gui.rendering;
 
 import java.awt.Graphics;
 
-import grid2.UsefullFullGrid;
+import simulation.UsefullFullGrid;
 
 public class ElementRender implements Render {
 	

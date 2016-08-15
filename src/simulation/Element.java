@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import static utils.Utils.INF;
 

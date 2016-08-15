@@ -4,13 +4,13 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import grid.Grid;
-import grid2.UsefullFullGrid;
+import gui.grid.Grid;
 import reactivity.ValueListener;
 import reactivity.gui.coloringTextField.ValueField;
 import reactivity.resources.guiColorModel.GUIColorModel;
 import reactivity.valueWrappers.DoubleValue;
 import reactivity.valueWrappers.Value;
+import simulation.UsefullFullGrid;
 
 public class StatsPanel extends JPanel {
 	private static final long serialVersionUID = -5049433424673188370L;

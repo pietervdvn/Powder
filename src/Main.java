@@ -6,14 +6,14 @@ import java.util.List;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import grid2.Element;
-import grid2.ElementIndexing;
-import grid2.ParseElements;
-import grid2.Reaction;
-import grid2.ReactionCache;
-import grid2.UsefullFullGrid;
 import gui.PowderWindow;
 import reactivity.resources.guiColorModel.GUIColorModel;
+import simulation.Element;
+import simulation.ElementIndexing;
+import simulation.ParseElements;
+import simulation.Reaction;
+import simulation.ReactionCache;
+import simulation.UsefullFullGrid;
 
 public class Main {
 

@@ -1,6 +1,6 @@
 package levels;
 
-import grid2.UsefullFullGrid;
+import simulation.UsefullFullGrid;
 
 public abstract class AbstractLevel {
 

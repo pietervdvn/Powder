@@ -1,4 +1,4 @@
-package rendering;
+package gui.rendering;
 
 import static utils.Utils.interpolate;
 

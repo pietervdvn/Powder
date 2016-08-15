@@ -1,8 +1,8 @@
-package rendering;
-
-import grid.Grid;
+package gui.rendering;
 
 import java.awt.Graphics;
+
+import gui.grid.Grid;
 
 public class GridRender implements Render{
 	

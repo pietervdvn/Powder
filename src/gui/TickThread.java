@@ -1,10 +1,10 @@
 package gui;
 
-import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.IntegerValue;
 import reactivity.valueWrappers.Value;
+import simulation.UsefullFullGrid;
 
 public class TickThread implements Runnable, ValueListener<Boolean> {
 

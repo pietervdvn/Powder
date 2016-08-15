@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import static utils.Utils.lr;
 import static utils.Utils.p;
@@ -7,7 +7,7 @@ import static utils.Utils.p;
  * The class holding all matrices to work on - and doing all calculations
  *
  */
-public class FullGrid {
+public class Simulation {
 
 	public final int dotsX, dotsY;
 
@@ -25,7 +25,6 @@ public class FullGrid {
 	private final static double MOVEMENT_THRESHOLD = 0.0;
 	// both temperature and weight get swapped when elements swap
 	public double[][] temperature0;
-	public double[][] temperature1;
 	private int timeSinceTemperatureUpdate = 0;
 	// exchanging heat each frame ~= exchanging twice the heat, every two frames
 	private final static int TEMPERATURE_UPDATE_TIME = 5;
@@ -44,6 +43,8 @@ public class FullGrid {
 
 	// downward pressure
 	public final double[][] staticPressure;
+	
+	public final double[][] dynamicPressure;
 
 	// means an external change has happened (e.g. mouse painted something) ->
 	// static pressure should be recalculated
@@ -51,7 +52,7 @@ public class FullGrid {
 	protected final ElementIndexing indexer;
 	protected final ReactionCache reactions;
 
-	public FullGrid(int dotsX, int dotsY, ElementIndexing indexer, ReactionCache reactions) {
+	public Simulation(int dotsX, int dotsY, ElementIndexing indexer, ReactionCache reactions) {
 		this.dotsX = dotsX;
 		this.dotsY = dotsY;
 		this.indexer = indexer;
@@ -61,11 +62,11 @@ public class FullGrid {
 		grid = new Element[dotsX][dotsY];
 		moveable = new int[dotsX][dotsY];
 		temperature0 = new double[dotsX][dotsY];
-		temperature1 = new double[dotsX][dotsY];
 
 		weight = new double[dotsX][dotsY];
 		weightDiff = new double[dotsX];
 		staticPressure = new double[dotsX][dotsY];
+		dynamicPressure = new double[dotsX][dotsY];
 
 		for (int x = 0; x < dotsX; x++) {
 			for (int y = 0; y < dotsY; y++) {
@@ -189,7 +190,6 @@ public class FullGrid {
 	}
 
 	private void changeStates() {
-		// TODO Auto-generated method stub
 		for (int x = 0; x < dotsX; x++) {
 			for (int y = 0; y < dotsY; y++) {
 				Element e = grid[x][y];
@@ -227,7 +227,11 @@ public class FullGrid {
 				}
 				setValue(x0, y0, r.result0);
 				setValue(x1, y1, r.result1);
-
+				
+				temperature0[x0][y0] += r.enthalpy;
+				temperature0[x1][y1] += r.enthalpy;
+				
+				// TODO dynamic pressure
 			}
 		}
 
@@ -331,7 +335,6 @@ public class FullGrid {
 	public void swap(int x, int y, int x0, int y0) {
 		swapMatrix(grid, x, y, x0, y0);
 		swapMatrix(temperature0, x, y, x0, y0);
-		swapMatrix(temperature1, x, y, x0, y0);
 
 		swapMatrix(elements, x, y, x0, y0);
 		swapMatrix(weight, x, y, x0, y0);
@@ -407,8 +410,6 @@ public class FullGrid {
 		}
 		if (e.spawnTemperature != -1) {
 			temperature0[x][y] = e.spawnTemperature;
-			temperature1[x][y] = e.spawnTemperature;
-
 		}
 		setValue(x, y, e);
 

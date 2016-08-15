@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class ElementIndexing {
 	
 	
 	public Element getBaseElement(int multiRepr){
-		return elementList[(multiRepr-1) % totalNumberOfElements];
+		return elementList[multiRepr % totalNumberOfElements];
 	}
 	
 	public String nameOf(int id){

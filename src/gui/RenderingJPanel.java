@@ -10,11 +10,11 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import gui.rendering.Render;
 import reactivity.ValueListener;
 import reactivity.valueWrappers.BooleanValue;
 import reactivity.valueWrappers.IntegerValue;
 import reactivity.valueWrappers.Value;
-import rendering.Render;
 
 public class RenderingJPanel extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;

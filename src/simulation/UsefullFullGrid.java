@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import java.awt.Color;
 
@@ -11,7 +11,7 @@ import reactivity.valueWrappers.IntegerValue;
  * @author pietervdvn
  *
  */
-public class UsefullFullGrid extends FullGrid {
+public class UsefullFullGrid extends Simulation {
 
 	public final IntegerValue ticks = new IntegerValue(0, "Clock");
 	public final IntegerValue neededTime = new IntegerValue(0, "needed time for latest update (ms)");
@@ -57,7 +57,6 @@ public class UsefullFullGrid extends FullGrid {
 		for (int x = 0; x < dotsX; x++) {
 			for (int y = 0; y < dotsY; y++) {
 				temperature0[x][y] = l.defaultTemp;
-				temperature1[x][y] = l.defaultTemp;
 				spawnValue(x, y, l.defaultElement);
 			}
 		}

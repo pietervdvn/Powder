@@ -1,4 +1,4 @@
-package grid;
+package gui.grid;
 
 public class Grid extends AbstractGrid<Double>{
 

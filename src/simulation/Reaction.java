@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import java.util.List;
 import java.util.Map;
@@ -10,21 +10,26 @@ public class Reaction {
 
 	public final int element0;
 	public final int element1;
-	
+
 	public final int result0;
 	public final int result1;
-	
+
 	public final double prob;
+	public final double enthalpy;
+	public final double pressure;
 
 	private final ElementIndexing indexer;
 
-	public Reaction(ElementIndexing indexer, int element0, int element1, int result0, int result1, double prob) {
+	public Reaction(ElementIndexing indexer, int element0, int element1, int result0, int result1, double prob,
+			double enthalpy, double pressure) {
 		this.indexer = indexer;
 		this.element0 = element0;
 		this.element1 = element1;
 		this.result0 = result0;
 		this.result1 = result1;
 		this.prob = prob;
+		this.enthalpy = enthalpy;
+		this.pressure = pressure;
 	}
 
 	public void validate() {
@@ -34,11 +39,12 @@ public class Reaction {
 	}
 
 	public static Reaction fromCSV(ElementIndexing indexer, Map<String, CSVEntry> csv) {
-			int el0id = indexer.idFromName(csv.get("element0").stringValue);
-			int el1id = indexer.idFromName(csv.get("element1").stringValue);
-			int rel0id = indexer.idFromName(csv.get("result0").stringValue);
-			int rel1id = indexer.idFromName(csv.get("result1").stringValue);
-		return new Reaction(indexer, el0id, el1id, rel0id, rel1id, csv.get("prob").doubleWithDefault(1.0));
+		int el0id = indexer.idFromName(csv.get("element0").stringValue);
+		int el1id = indexer.idFromName(csv.get("element1").stringValue);
+		int rel0id = indexer.idFromName(csv.get("result0").stringValue);
+		int rel1id = indexer.idFromName(csv.get("result1").stringValue);
+		return new Reaction(indexer, el0id, el1id, rel0id, rel1id, csv.get("prob").doubleWithDefault(1.0)
+				, csv.get("enthalpy").doubleWithDefault(0.0), csv.get("pressure").doubleWithDefault(0.0));
 	}
 
 	public static Reaction[] fromCSVs(ElementIndexing indexer, List<String> lines) {
@@ -54,8 +60,8 @@ public class Reaction {
 
 	@Override
 	public String toString() {
-		return indexer.nameOf(element0) + " + " + indexer.nameOf(element1) + " --> "
-				+ indexer.nameOf(result0) + " + " + indexer.nameOf(result1)+" (p=" + prob + ")";
+		return indexer.nameOf(element0) + " + " + indexer.nameOf(element1) + " --> " + indexer.nameOf(result0) + " + "
+				+ indexer.nameOf(result1) + " (p=" + prob + ")";
 	}
 
 }

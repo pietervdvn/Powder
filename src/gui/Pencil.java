@@ -1,9 +1,9 @@
 package gui;
 
-import grid2.Element;
-import grid2.UsefullFullGrid;
 import reactivity.ValueListener;
 import reactivity.valueWrappers.Value;
+import simulation.Element;
+import simulation.UsefullFullGrid;
 
 @SuppressWarnings("rawtypes")
 public class Pencil implements ValueListener {
@@ -23,7 +23,7 @@ public class Pencil implements ValueListener {
 		this.mouseY = mouseY;
 		this.selection = selection;
 		this.pencilSize = pencilSize;
-		mousePressed.addListener(this);
+		mousePressed.addHardListener(this);
 		mouseX.addListener(this);
 		mouseY.addListener(this);
 		ticker.addListener(this);

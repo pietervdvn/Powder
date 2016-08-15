@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 public class ReactionCache {
 
@@ -16,8 +16,8 @@ public class ReactionCache {
 	}
 	
 	private void addReaction(Reaction r){
-		reactions[(r.element0-1)*numberOfElements + (r.element1-1)] = r;
-		reactions[(r.element1-1)*numberOfElements + (r.element0-1)] = r;
+		reactions[r.element0*numberOfElements + r.element1] = r;
+		reactions[r.element1*numberOfElements + r.element0] = r;
 
 	}
 	
@@ -25,8 +25,6 @@ public class ReactionCache {
 	 * Returns a reaction if one exists, or null
 	 */
 	public Reaction getReactionFor(int id1, int id2){
-		id1--;
-		id2--;
 		return reactions[id1*numberOfElements + id2];
 	}
 	

@@ -7,8 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import grid2.Element;
 import reactivity.valueWrappers.Value;
+import simulation.Element;
 
 public class ElementSelector extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -1935925059529481503L;

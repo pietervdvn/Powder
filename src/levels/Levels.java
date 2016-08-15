@@ -5,7 +5,7 @@ import static utils.Utils.p;
 import java.util.Arrays;
 import java.util.List;
 
-import grid2.UsefullFullGrid;
+import simulation.UsefullFullGrid;
 
 public class Levels {
 

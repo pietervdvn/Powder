@@ -1,4 +1,4 @@
-package grid2;
+package simulation;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,7 @@ public class ParseElements {
 		List<Map<String, CSVEntry>> parsed = SimpleCSVParser.parseCSV(csv);
 		Element[] els = new Element[parsed.size()];
 		
-		int id = 1;
+		int id = 0;
 		Map<String, Integer> ids = new HashMap<String, Integer>();
 		for (Map<String,CSVEntry> map : parsed) {
 			String name = map.get("name").stringValue.toUpperCase();
@@ -25,7 +25,7 @@ public class ParseElements {
 		}
 		
 		for (int i = 0; i < els.length; i++) {
-			els[i] = Element.fromCSV(i+1, ids, parsed.get(i));
+			els[i] = Element.fromCSV(i, ids, parsed.get(i));
 		}
 		
 		for (Element e : els) {

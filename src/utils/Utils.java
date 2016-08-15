@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Map;
 import java.util.Random;
 
-import grid2.Element;
+import simulation.Element;
 
 
 public class Utils {
