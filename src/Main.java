@@ -7,6 +7,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import gui.PowderWindow;
+import levels.Levels;
 import reactivity.resources.guiColorModel.GUIColorModel;
 import simulation.DecayCache;
 import simulation.DecayReaction;
@@ -20,6 +21,7 @@ import simulation.UsefullFullGrid;
 public class Main {
 
 	public static void main(String[] args) {
+		System.out.println("POWDER - by Pieter Vander Vennet - v 0.0.1");
 		try {
 			main0(args);
 		} catch (Exception e) {
@@ -63,6 +65,7 @@ public class Main {
 		int pixelsDot = pixelsTargetX / dotsX;
 
 		UsefullFullGrid elements = new UsefullFullGrid(indexer, dc, reactions, dotsX, dotsY);
+		Levels.beach.seed(elements);
 
 		GUIColorModel cm = new GUIColorModel();
 

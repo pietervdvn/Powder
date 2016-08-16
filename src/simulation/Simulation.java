@@ -220,13 +220,16 @@ public class Simulation {
 			for (int y0 = 0; y0 < dotsY; y0++) {
 
 				int x1 = x0 + lr(0.5);
-				int y1 = y0 + lr(0.5);
+				int y1 = y0;
+				if (x1 != x0) {
+					y1 = y0 + lr(0.5);
+				}
 
 				if (!inBounds(x1, y1)) {
 					continue;
 				}
-				if(x0 == x1 && y0 == y1){
-					continue;	
+				if (x0 == x1 && y0 == y1) {
+					continue;
 				}
 
 				Reaction r = reactions.getReactionFor(elements[x0][y0], elements[x1][y1]);

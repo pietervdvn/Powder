@@ -31,12 +31,14 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 	 */
 	public void pauseWhile(Runnable precontrol, Runnable r, Runnable postControl) {
 		boolean running;
-		running = control.get();
+		synchronized (this) {
+			running = control.get();
+		}
 		if (precontrol != null) {
 			precontrol.run();
 		}
 		controlLocked.set(true);
-		synchronized (control) {
+		synchronized (this) {
 			control.set(false);
 		}
 
@@ -55,10 +57,10 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 				}
 				r.run();
 
-				synchronized (control) {
+				synchronized (this) {
 					control.set(running);
 					controlLocked.set(false);
-					control.notifyAll();
+					this.notifyAll();
 				}
 
 				if (postControl != null) {
@@ -74,7 +76,7 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 		try {
 			while (true) {
 				boolean run;
-				synchronized (control) {
+				synchronized (this) {
 					run = control.get();
 				}
 
@@ -85,18 +87,14 @@ public class TickThread implements Runnable, ValueListener<Boolean> {
 					fg.tick();
 					synchronized (this) {
 						isUpdating = false;
-						this.notifyAll();
 					}
 					Thread.sleep(timeout.get());
 				} else {
-					synchronized (control) {
-						control.notifyAll();
-					}
 					synchronized (this) {
 						this.notifyAll();
 					}
-					synchronized (control) {
-						control.wait();
+					synchronized (this) {
+						this.wait();
 					}
 				}
 			}

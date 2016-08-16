@@ -68,6 +68,9 @@ public class Levels {
 		public void seed(UsefullFullGrid elements) {
 			int w = elements.dotsX;
 			int h = elements.dotsY;
+			
+			elements.fillStretch(0, 0, w, h, "AIR");
+			
 			elements.fillStretch(0, h - 1, w, 1, "BLOCK");
 			elements.fillStretch(0, 0, 1, h,     "BLOCK");
 			elements.fillStretch(w - 1, 0, 1, h, "BLOCK");
@@ -76,16 +79,16 @@ public class Levels {
 
 			elements.fillStretch(7 * w / 8, 0, w / 8, 20, "SALT");
 
-			elements.fillStretch(1, 1 + h / 3, w / 2, (2 * h) / 3, "SAND");
+			elements.fillStretch(1, 1 + h / 3, w / 2, (2 * h) / 3, "WET_GROUND");
 
-			elements.fillStretch(1, 10, 10, 5, "SAND");
-			elements.fillStretch(1, 15, 70, 5, "SAND");
-			elements.fillStretch(1, 20, 30, 5, "SAND");
-			elements.fillStretch(1, 25, 50, 5, "SAND");
-			elements.fillStretch(1, 30, 90, 5, "SAND");
+			elements.fillStretch(1, 10, 10, 5, "WET_GROUND");
+			elements.fillStretch(1, 15, 70, 5, "WET_GROUND");
+			elements.fillStretch(1, 20, 30, 5, "WET_GROUND");
+			elements.fillStretch(1, 25, 50, 5, "WET_GROUND");
+			elements.fillStretch(1, 30, 90, 5, "WET_GROUND");
 
-		//	elements.fillStretch(1, 1, 50, 10, "WATER");
-			elements.fillStretch(0, 0, 1, h, "CONDENSOR");
+			elements.fillStretch(1, 1, 50, 10, "WATER");
+			
 		}
 	};
 
